@@ -2,13 +2,13 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/linearLayout4"
+    android:id="@+id/information_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
 
     <ImageView
-        android:id="@+id/ioImage"
+        android:id="@+id/information_layout_image"
         android:layout_width="25dp"
         android:layout_height="4dp"
         android:layout_marginStart="16dp"
@@ -22,7 +22,7 @@
         app:srcCompat="@color/colorPrimary" />
 
     <TextView
-        android:id="@+id/ioName"
+        android:id="@+id/information_layout_name"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
@@ -35,10 +35,10 @@
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/ioImage" />
+        app:layout_constraintTop_toBottomOf="@+id/information_layout_image" />
 
     <TextView
-        android:id="@+id/ioSubtext"
+        android:id="@+id/information_layout_summary"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
@@ -48,6 +48,6 @@
         android:text="TextView"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/ioName" />
+        app:layout_constraintTop_toBottomOf="@+id/information_layout_name" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

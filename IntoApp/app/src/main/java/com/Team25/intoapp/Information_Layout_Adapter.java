@@ -58,9 +58,9 @@ public class Information_Layout_Adapter extends ArrayAdapter {
         final TextView ioSummary;
 
         ViewHolder(View v) {
-            this.ioName = v.findViewById(R.id.ioName);
-            this.ioSummary = v.findViewById(R.id.ioSubtext);
-            this.ioImage = v.findViewById(R.id.ioImage);
+            this.ioName = v.findViewById(R.id.information_layout_name);
+            this.ioSummary = v.findViewById(R.id.information_layout_summary);
+            this.ioImage = v.findViewById(R.id.information_layout_image);
         }
     }
 }
