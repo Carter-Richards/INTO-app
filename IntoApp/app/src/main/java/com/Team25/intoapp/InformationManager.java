@@ -12,9 +12,7 @@ public class InformationManager {
     }
 
     public void loadAllObjects(){
-		for(int i = 0; i<informationObjects.size(); i++){
-            informationObjects.get(i).loadObject();
-        }
+		
     }
 
     public InformationManager selectInformationManager(){
