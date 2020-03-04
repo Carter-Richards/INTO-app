@@ -42,7 +42,6 @@ class DatabaseConnection{
             $this->connection->setAttribute(PDO::ATTR_EMULATE_PREPARES, false);
             $this->connection->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
             print(nl2br("Connection Succesfull\n"));
-            print(isset($this->connection));
         }
          catch (PDOException $PDOe) {
             print("ERROR: Could not create connection to database");
@@ -55,7 +54,4 @@ class DatabaseConnection{
         $this->connection = null;
     }
 }
-
- $dbo = new DatabaseConnection();
- $dbo->connect();
 ?>

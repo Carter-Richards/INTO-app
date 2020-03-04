@@ -34,7 +34,7 @@ class EventAdapter{
     public function getEventsBeforeDate($date){
         $query = $this->dbConn->prepare(  'SELECT Title, Description, Date, ST_AsText(Location) FROM events 
                             WHERE Date < :date');
-        $query->(':date', $date);
+        $query->bindparam(':date', $date);
         $query->execute();
         return($query->fetchAll());
     }
@@ -42,7 +42,7 @@ class EventAdapter{
     public function getEventsOnDate($date){
         $query = $this->dbConn->prepare(  'SELECT Title, Description, Date, ST_AsText(Location) FROM events 
                             WHERE Date = :date');
-        $query->(':date', $date);
+        $query->bindparam(':date', $date);
         $query->execute();
         return($query->fetchAll());
     }
