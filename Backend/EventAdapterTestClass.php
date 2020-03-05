@@ -4,13 +4,22 @@
 
     $api = new EventAdapter();
 
-    print('Output Start<br>');
+    print('getAllEvents test output<br>');
     $result = $api->getAllEvents();
-    for($x = 0; $x < count($result); $x++){
-        $row = $result[$x];
-        for($y = 0; $y < count($row); $y++)
-            print($row[$y]."<br>");
-    }
-    print('Output End');
+    print_r($result);
+    
+    print('<br><br>');
 
+    print('getEventsAfterDate 2015-01-01 12:00:00 test output<br>');
+    $result = $api->getEventsAfterDate('2015-01-01 12:00:00');
+    print_r($result);
+
+    print('<br><br>');
+
+    print('getEventsAfterDate 2015-01-01 test output<br>');
+    $result = $api->getEventsAfterDate('2015-01-01');
+    print_r($result);
+
+
+    
 ?>

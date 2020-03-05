@@ -20,7 +20,7 @@ class EventAdapter{
     public function getAllEvents(){
         $query = $this->dbConn->prepare(  'SELECT Title, Description, Date, ST_AsText(Location) FROM events');
         $query->execute();
-        return($query->fetchAll());
+        return($query->fetchAll(PDO::FETCH_ASSOC));
     }
 
     public function getEventsAfterDate($date){
@@ -28,7 +28,7 @@ class EventAdapter{
                             WHERE Date > :date');
         $query->bindParam(':date', $date);
         $query->execute();
-        return($query->fetchAll());
+        return($query->fetchAll(PDO::FETCH_ASSOC));
     }
 
     public function getEventsBeforeDate($date){
@@ -36,7 +36,7 @@ class EventAdapter{
                             WHERE Date < :date');
         $query->bindparam(':date', $date);
         $query->execute();
-        return($query->fetchAll());
+        return($query->fetchAll(PDO::FETCH_ASSOC));
     }
 
     public function getEventsOnDate($date){
@@ -44,7 +44,7 @@ class EventAdapter{
                             WHERE Date = :date');
         $query->bindparam(':date', $date);
         $query->execute();
-        return($query->fetchAll());
+        return($query->fetchAll(PDO::FETCH_ASSOC));
     }
 }
 
