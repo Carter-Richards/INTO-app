@@ -24,11 +24,9 @@
         android:scrollbarAlwaysDrawVerticalTrack="true"
         android:scrollbars="vertical"
         android:verticalScrollbarPosition="right"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/menu_image"
-        app:layout_constraintVertical_bias="0.0">
+        app:layout_constraintTop_toBottomOf="@+id/menu_image">
 
 
         <androidx.constraintlayout.widget.ConstraintLayout
@@ -42,11 +40,15 @@
 
             <ImageView
                 android:id="@+id/menu_layout_logo_aboutUs"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:layout_marginStart="4dp"
+                android:layout_marginLeft="4dp"
+                android:layout_marginTop="1dp"
+                android:scaleType="fitCenter"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:srcCompat="@drawable/common_google_signin_btn_icon_dark" />
+                app:srcCompat="@drawable/information" />
 
             <TextView
                 android:id="@+id/menu_object_text_aboutUs"
@@ -73,11 +75,15 @@
 
             <ImageView
                 android:id="@+id/menu_layout_logo_notifications"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:layout_marginStart="4dp"
+                android:layout_marginLeft="4dp"
+                android:layout_marginTop="1dp"
+                android:scaleType="fitCenter"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:srcCompat="@drawable/common_google_signin_btn_icon_dark" />
+                app:srcCompat="@drawable/notifications" />
 
             <TextView
                 android:id="@+id/menu_object_text_notifications"
@@ -114,11 +120,14 @@
 
             <ImageView
                 android:id="@+id/menu_layout_logo_thingsToDo"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:layout_marginStart="4dp"
+                android:layout_marginLeft="4dp"
+                android:layout_marginTop="1dp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:srcCompat="@drawable/common_google_signin_btn_icon_dark" />
+                app:srcCompat="@drawable/thingstodo" />
 
             <TextView
                 android:id="@+id/menu_object_text_ThingsToDo"
@@ -145,11 +154,14 @@
 
             <ImageView
                 android:id="@+id/menu_layout_logo_placesToEat"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:layout_marginStart="4dp"
+                android:layout_marginLeft="4dp"
+                android:layout_marginTop="1dp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:srcCompat="@drawable/common_google_signin_btn_icon_dark" />
+                app:srcCompat="@drawable/eat" />
 
             <TextView
                 android:id="@+id/menu_object_text_placeesToEat"
@@ -164,7 +176,7 @@
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/menu_layout_nclEssesentials"
+            android:id="@+id/menu_layout_nclEssentials"
             android:layout_width="0dp"
             android:layout_height="51dp"
             android:layout_marginTop="8dp"
@@ -176,11 +188,14 @@
 
             <ImageView
                 android:id="@+id/menu_layout_logo_nclEssentials"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:layout_marginStart="4dp"
+                android:layout_marginLeft="4dp"
+                android:layout_marginTop="1dp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:srcCompat="@drawable/common_google_signin_btn_icon_dark" />
+                app:srcCompat="@drawable/nclessentials" />
 
             <TextView
                 android:id="@+id/menu_object_text_nclEssentials"
@@ -203,15 +218,18 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="1.0"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/menu_layout_nclEssesentials">
+            app:layout_constraintTop_toBottomOf="@+id/menu_layout_nclEssentials">
 
             <ImageView
                 android:id="@+id/menu_layout_logo_publicTransport"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:layout_marginStart="4dp"
+                android:layout_marginLeft="4dp"
+                android:layout_marginTop="1dp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:srcCompat="@drawable/common_google_signin_btn_icon_dark" />
+                app:srcCompat="@drawable/travel" />
 
             <TextView
                 android:id="@+id/menu_object_text_publicTransport"
@@ -238,11 +256,14 @@
 
             <ImageView
                 android:id="@+id/menu_layout_logo_saftey"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:layout_marginStart="4dp"
+                android:layout_marginLeft="4dp"
+                android:layout_marginTop="1dp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:srcCompat="@drawable/common_google_signin_btn_icon_dark" />
+                app:srcCompat="@drawable/saftey" />
 
             <TextView
                 android:id="@+id/menu_object_text_saftey"
@@ -278,11 +299,14 @@
 
             <ImageView
                 android:id="@+id/menu_layout_logo_maps"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:layout_marginStart="4dp"
+                android:layout_marginLeft="4dp"
+                android:layout_marginTop="1dp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:srcCompat="@drawable/common_google_signin_btn_icon_dark" />
+                app:srcCompat="@drawable/maps" />
 
             <TextView
                 android:id="@+id/menu_object_text_maps"
@@ -308,11 +332,14 @@
 
             <ImageView
                 android:id="@+id/menu_layout_logo_societys"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:layout_marginStart="4dp"
+                android:layout_marginLeft="4dp"
+                android:layout_marginTop="1dp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:srcCompat="@drawable/common_google_signin_btn_icon_dark" />
+                app:srcCompat="@drawable/societys" />
 
             <TextView
                 android:id="@+id/menu_object_text_societys"

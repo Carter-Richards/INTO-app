@@ -5,7 +5,8 @@
     android:id="@+id/activity_homepage_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:background="#ffffff">
 
     <TextView
         android:id="@+id/activity_homePage_topText"
@@ -13,10 +14,12 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:layout_marginLeft="8dp"
+        android:layout_marginTop="24dp"
         android:layout_marginEnd="8dp"
         android:layout_marginRight="8dp"
         android:gravity="center"
         android:text="Welcome\nChinese\nIndian\nArabic"
+        android:textColor="@android:color/black"
         android:textSize="20sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.492"
@@ -29,7 +32,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:layout_marginLeft="8dp"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="16dp"
         android:layout_marginEnd="8dp"
         android:layout_marginRight="8dp"
         android:text="To INTO Newcastle University"
@@ -46,23 +49,24 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:layout_marginLeft="8dp"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="16dp"
         android:layout_marginEnd="8dp"
         android:layout_marginRight="8dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/activity_homepage_middleText"
-        app:srcCompat="@drawable/common_google_signin_btn_icon_dark" />
+        app:srcCompat="@drawable/inologo" />
 
     <TextView
         android:id="@+id/activity_homepage_bottamTextView"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="16dp"
         android:autoText="false"
-        android:background="#0C534E4E"
+        android:background="#666666"
         android:gravity="center_horizontal"
-        android:text="Thousands of Internation Students.\n One of The UK's finest Universitys.\n A member of the Russell Group\n\nCome explore the UK's\n favourite student city\n through this app!"
+        android:text="\nThousands of Internation Students.\n One of The UK's finest Universitys.\n A member of the Russell Group\n\nCome explore the UK's\n favourite student city\n through this app!\n"
+        android:textColor="@android:color/black"
         android:textSize="20sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
@@ -73,9 +77,10 @@
         android:id="@+id/activity_homepage_bottamImage"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/activity_homepage_bottamTextView"
-        app:srcCompat="@drawable/common_google_signin_btn_icon_dark" />
+        app:srcCompat="@drawable/newcastlelogo" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

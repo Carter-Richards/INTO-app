@@ -5,23 +5,17 @@
     android:id="@+id/activity_main_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical">
-
-    <LinearLayout
-        android:id="@+id/activity_main_menu"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"></LinearLayout>
+    android:background="@android:color/white"
+    android:orientation="vertical"
+    android:visibility="visible">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/activity_main_menuContainer"
         android:layout_width="0dp"
-        android:layout_height="107dp"
+        android:layout_height="60dp"
         android:background="#ff0000"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/activity_main_menu"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
         <androidx.constraintlayout.widget.Guideline
@@ -34,7 +28,7 @@
         <ImageView
             android:id="@+id/activity_main_menuContainer_logo"
             android:layout_width="100dp"
-            android:layout_height="wrap_content"
+            android:layout_height="60dp"
             android:layout_marginTop="24dp"
             android:layout_marginEnd="24dp"
             android:layout_marginRight="24dp"
@@ -47,8 +41,8 @@
 
         <ImageButton
             android:id="@+id/activity_main_menuContainer_emergencyButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
             android:layout_marginStart="32dp"
             android:layout_marginLeft="32dp"
             android:layout_marginTop="24dp"
@@ -57,21 +51,22 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/activity_main_menuContainer_logo"
             app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@drawable/common_google_signin_btn_icon_light" />
+            app:srcCompat="@drawable/saftey" />
 
         <ImageButton
             android:id="@+id/activity_main_menuContainer_menuButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
             android:layout_marginTop="24dp"
             android:layout_marginEnd="32dp"
             android:layout_marginRight="32dp"
             android:layout_marginBottom="24dp"
+            android:scaleType="fitXY"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/activity_main_menuContainer_logo"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@drawable/common_google_signin_btn_icon_dark" />
+            app:srcCompat="@drawable/menu_icon" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -91,6 +86,20 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        app:layout_constraintGuide_percent="0.3" />
+        app:layout_constraintGuide_percent="0.5" />
+
+    <ScrollView
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toStartOf="@+id/guideline4"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <LinearLayout
+            android:id="@+id/activity_main_menu"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical" />
+    </ScrollView>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -7,11 +7,12 @@ public class InformationObject {
     private String name;
     private String summary;
     private String mapsCoords;
-
-    public InformationObject(String name, String summary, String mapsCoords) {
+    private String picture;
+    public InformationObject(String name, String summary, String mapsCoords,String picture) {
         this.name = name;
         this.summary = summary;
         this.mapsCoords = mapsCoords;
+        this.picture = picture;
     }
 
     public String getName() {
@@ -36,5 +37,9 @@ public class InformationObject {
 
     public void setMapsCoords(String mapsCoords) {
         this.mapsCoords = mapsCoords;
+    }
+
+    public String getPicture() {
+        return picture;
     }
 }
