@@ -11,16 +11,16 @@ public class InformationManager {
         this.name = name;
     }
 
+<<<<<<< Updated upstream
     public void loadAllObjects(){
-		for(int i = 0; i<informationObjects.size(); i++){
-            informationObjects.get(i).loadObject();
-        }
+		
     }
 
+=======
+>>>>>>> Stashed changes
     public InformationManager selectInformationManager(){
         return new InformationManager();
     }
-
 
     public LinkedList<InformationObject> getInformationObjects() {
         return informationObjects;
