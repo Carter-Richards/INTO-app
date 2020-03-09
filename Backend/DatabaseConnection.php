@@ -41,7 +41,6 @@ class DatabaseConnection{
             //Code from top answer of https://stackoverflow.com/questions/60174/how-can-i-prevent-sql-injection-in-php, this is to allow the connection to use real prepared statements, which guards against SQL injection
             $this->connection->setAttribute(PDO::ATTR_EMULATE_PREPARES, false);
             $this->connection->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-            print(nl2br("Connection Succesfull\n"));
         }
          catch (PDOException $PDOe) {
             print("ERROR: Could not create connection to database");
