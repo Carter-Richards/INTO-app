@@ -17,34 +17,49 @@ class EventAdapter{
         $this->connectObj->__destruct();
     }
 
+    public function makeFullImgLink($recordSet){
+        for($x = 0; $x < count($recordSet); $x++){
+            foreach($recordSet[$x] as $field => $value){
+                if($field == 'ImgPath'){
+                    $recordSet[$x][$field] = "/Images/".$recordSet[$x][$field];
+                }
+            }
+        }
+        return($recordSet);
+    }
+
     public function getAllEvents(){
-        $query = $this->dbConn->prepare(  'SELECT Title, Description, Date, ST_AsText(Location) FROM events');
+        $query = $this->dbConn->prepare(  'SELECT Title, Description, Date, ST_AsText(Location), ImgPath FROM events');
         $query->execute();
-        return($query->fetchAll(PDO::FETCH_ASSOC));
+        $result = $this->makeFullImgLink($query->fetchAll(PDO::FETCH_ASSOC));
+        return($result);
     }
 
     public function getEventsAfterDate($date){
-        $query = $this->dbConn->prepare(  'SELECT Title, Description, Date, ST_AsText(Location) FROM events 
+        $query = $this->dbConn->prepare(  'SELECT Title, Description, Date, ST_AsText(Location), ImgPath FROM events 
                             WHERE Date > :date');
         $query->bindParam(':date', $date);
         $query->execute();
-        return($query->fetchAll(PDO::FETCH_ASSOC));
+        $result = $this->makeFullImgLink($query->fetchAll(PDO::FETCH_ASSOC));
+        return($result);
     }
 
     public function getEventsBeforeDate($date){
-        $query = $this->dbConn->prepare(  'SELECT Title, Description, Date, ST_AsText(Location) FROM events 
+        $query = $this->dbConn->prepare(  'SELECT Title, Description, Date, ST_AsText(Location), ImgPath FROM events 
                             WHERE Date < :date');
         $query->bindparam(':date', $date);
         $query->execute();
-        return($query->fetchAll(PDO::FETCH_ASSOC));
+        $result = $this->makeFullImgLink($query->fetchAll(PDO::FETCH_ASSOC));
+        return($result);
     }
 
     public function getEventsOnDate($date){
-        $query = $this->dbConn->prepare(  'SELECT Title, Description, Date, ST_AsText(Location) FROM events 
+        $query = $this->dbConn->prepare(  'SELECT Title, Description, Date, ST_AsText(Location), ImgPath FROM events 
                             WHERE Date = :date');
         $query->bindparam(':date', $date);
         $query->execute();
-        return($query->fetchAll(PDO::FETCH_ASSOC));
+        $result = $this->makeFullImgLink($query->fetchAll(PDO::FETCH_ASSOC));
+        return($result);
     }
 }
 

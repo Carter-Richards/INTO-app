@@ -11,11 +11,11 @@
     if(isset($mode)){
         if($mode=='after'){
             $result = $adapter->getEventsAfterDate($date);
-            print_r(json_encode($result, JSON_FORCE_OBJECT));
+            print_r(json_encode($result, JSON_UNESCAPED_SLASHES));
         }
         if($mode=='before'){
             $result = $adapter->getEventsBeforeDate($date);
-            print_r(json_encode($result, JSON_FORCE_OBJECT));
+            print_r(json_encode($result, JSON_UNESCAPED_SLASHES));
         }
         if($mode=='on'){
             //needs implementation in EventAdapter
