@@ -61,6 +61,26 @@ class EventAdapter{
         $result = $this->makeFullImgLink($query->fetchAll(PDO::FETCH_ASSOC));
         return($result);
     }
+
+    public function parseRecords($records){
+        //Code adapted from https://www.codeofaninja.com/2017/02/create-simple-rest-api-in-php.html
+
+        $result_arr=array();
+        $result_arr["records"]=array();
+
+        for($x = 0; $x < count($records); $x++){
+            $record = array(
+                "Title"=>$records[$x]["Title"],
+                "Description"=>$records[$x]["Description"],
+                "Date"=>$records[$x]["Date"],
+                "Location"=>$records[$x]["ST_AsText(Location)"],
+                "ImgPath"=>$records[$x]["ImgPath"],
+            );
+            array_push($result_arr["records"], $record);
+        }
+
+        return($result_arr);
+    }
 }
 
 ?>

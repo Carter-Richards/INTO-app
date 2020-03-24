@@ -11,7 +11,8 @@
     if(isset($mode)){
         if($mode=='after'){
             $result = $adapter->getEventsAfterDate($date);
-            print_r(json_encode($result, JSON_UNESCAPED_SLASHES));
+            http_response_code(200);
+            echo json_encode($result);
         }
         if($mode=='before'){
             $result = $adapter->getEventsBeforeDate($date);
@@ -26,6 +27,5 @@
     //if mode = all, select all
     //if mode = before, select all before date param
     //if more = after, select all after date param
-
     
 ?>
