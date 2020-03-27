@@ -12,10 +12,8 @@ import android.widget.ListView;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.ResultSet;
-import java.sql.Statement;
+import java.io.*;
+import java.net.*;
 import java.util.LinkedList;
 
 public class MainActivity extends AppCompatActivity {
@@ -158,7 +156,7 @@ public class MainActivity extends AppCompatActivity {
         return menuData;
     }
     /** Below is a private class which uses threads to perform background activity for the user.
-     *  We will be using this background method to obtain data from the the database if and when queries need to be made.
+     *  We will be using this background method to obtain data from the database if and when queries need to be made.
      *  The DoInBackground method is called first and is then followed by on post execute.
      *  This will give us flexibility when it comes to our menu.
      *  However will have to be programmed correctly.
@@ -176,7 +174,7 @@ public class MainActivity extends AppCompatActivity {
             Log.d(TAG, "onPostExecute: Finished!");
         }
 
-        /** This method oreates the query and then creates an information manager object with the sorted information required for the display of the information of the query.
+        /** This method creates the query and then creates an information manager object with the sorted information required for the display of the information of the query.
          * @param strings - A string or list of strings that has been passed into the inner class for processing
          * @return - The required sorted data for display
          */
@@ -186,7 +184,7 @@ public class MainActivity extends AppCompatActivity {
             return doQuery(query);
         }
 
-        /** This switch class is called to build the query for the database based on the id of the button that has been clikced by the user.
+        /** This switch class is called to build the query for the database based on the id of the button that has been clicked by the user.
          *  This will allow us to reuse the same query database method for all the users interactions greatly reducing the amount of duplicate code in our code.
          * @param buttonID - The button that has been clicked id. Which is a unique identifier for the widget.
          * @return - A string which will be the complete and specified query for the expected and wanted action.
@@ -195,39 +193,40 @@ public class MainActivity extends AppCompatActivity {
             String actualQuery = "";
             switch (buttonID) {
                 case "aboutUs":
-                    Log.d(TAG, "quereyDataBase: case 1");
+                    Log.d(TAG, "queryDataBase: case 1");
+                    //actualQuery is the URL used to connect to the database
                     actualQuery = "";
                     break;
                 case "notifications":
-                    Log.d(TAG, "quereyDataBase: case 2");
+                    Log.d(TAG, "queryDataBase: case 2");
                     actualQuery = "";
                     break;
                 case "thingsToDo":
-                    Log.d(TAG, "quereyDataBase: case 3");
+                    Log.d(TAG, "queryDataBase: case 3");
                     actualQuery = "";
                     break;
                 case "placesToEat":
-                    Log.d(TAG, "quereyDataBase: case 4");
+                    Log.d(TAG, "queryDataBase: case 4");
                     actualQuery = "";
                     break;
                 case "nclEssentials":
-                    Log.d(TAG, "quereyDataBase: case 5");
+                    Log.d(TAG, "queryDataBase: case 5");
                     actualQuery = "";
                     break;
                 case "publicTransport":
-                    Log.d(TAG, "quereyDataBase: case 6");
+                    Log.d(TAG, "queryDataBase: case 6");
                     actualQuery = "";
                     break;
-                case "saftey":
-                    Log.d(TAG, "quereyDataBase: case 7");
+                case "safety":
+                    Log.d(TAG, "queryDataBase: case 7");
                     actualQuery = "";
                     break;
                 case "maps":
-                    Log.d(TAG, "quereyDataBase: case 8");
+                    Log.d(TAG, "queryDataBase: case 8");
                     actualQuery = "";
                     break;
-                case "societys":
-                    Log.d(TAG, "quereyDataBase: case 9");
+                case "societies":
+                    Log.d(TAG, "queryDataBase: case 9");
                     actualQuery = "";
                     break;
                 default:
@@ -241,9 +240,13 @@ public class MainActivity extends AppCompatActivity {
             InformationManager queryData = new InformationManager();
             try {
                 Class.forName("com.mysql.jdbc.Driver");
-                Connection conn = DriverManager.getConnection("Database_url", "usrname", "pswd");
-                Statement stmt = conn.createStatement();
-                ResultSet rs = stmt.executeQuery(query);
+                URL url = new URL(query);
+                URLConnection urlConnection = url.openConnection();
+                LinkedList<InformationObject> infoObjs = new LinkedList<InformationObject>();
+                ExtractInformationObjects queryInfo = new ExtractInformationObjects(infoObjs);
+                queryInfo.extractInformation(urlConnection.getInputStream());
+                infoObjs = queryInfo.getInformationObjects();
+                queryData.setInformationObjects(infoObjs);
             } catch (Exception e) {
                 Log.d(TAG, "doQuery: Exception Thrown in the query " + e.getMessage());
             }
