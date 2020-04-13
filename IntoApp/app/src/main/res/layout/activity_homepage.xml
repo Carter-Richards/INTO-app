@@ -63,7 +63,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
         android:autoText="false"
-        android:background="#666666"
+        android:background="#E2E2E2"
         android:gravity="center_horizontal"
         android:text="\nThousands of Internation Students.\n One of The UK's finest Universitys.\n A member of the Russell Group\n\nCome explore the UK's\n favourite student city\n through this app!\n"
         android:textColor="@android:color/black"
