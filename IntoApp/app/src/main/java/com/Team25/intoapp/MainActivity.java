@@ -1,4 +1,6 @@
 package com.Team25.intoapp;
+import android.content.Intent;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.text.Layout;
@@ -6,11 +8,16 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
+
+import com.google.android.gms.maps.SupportMapFragment;
 
 import java.io.*;
 import java.net.*;
@@ -18,11 +25,14 @@ import java.util.LinkedList;
 
 public class MainActivity extends AppCompatActivity {
     public static final String TAG = "MainActivity";
-    private String currentQuery;
+    private String currentLayout = "homepage";
     private LinearLayout main_layout;
     private LinearLayout menu;
     private LayoutInflater factory;
     private boolean menuPresent = false;
+    private double[] pointerPosX;
+    private double[] pointerPosY;
+    private String[] names;
 
     /** So the on create method is called when the application is initially launched. I have configured the manifest file to launch this method first.
      * The Log.d tags are just for us to see in the logcat editor to have a better understanding on what is happening under the hood.
@@ -46,13 +56,30 @@ public class MainActivity extends AppCompatActivity {
         main_layout.addView(myView);
         Log.d(TAG, "onCreate: Finised");
 
+        View.OnClickListener homePageListener = new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(currentLayout != "homepage"){
+                    main_layout.removeAllViews();
+                    main_layout.addView(myView);
+                }
+            }
+        };
+
+        View.OnClickListener safetyButtonListener = new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(currentLayout != "safety"){
+                    QueryDataBase query = new QueryDataBase();
+                    query.doInBackground("safety");
+                }
+            }
+        };
+
         View.OnClickListener menuButtonListener = new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Log.d(TAG, "onClick: MenuButtonCLicked!");
-                View menuView = factory.inflate(R.layout.menu_layout,null);
-                menu.addView(menuView);
-                menuPresent = true;
                 onClickMenuSetup();
             }
         };
@@ -69,14 +96,15 @@ public class MainActivity extends AppCompatActivity {
 
 
 
-
     /** Here are the linking variables allowing us to program the controls for the menu and the panic buttons at the top of the page
      *  Unfortunatly there is pretty much duplicate code in programming all the buttons which sucks but due to naming conventions
      */
+        ImageButton menuButton = findViewById(R.id.activity_main_menuContainer_menuButton);
+        ImageView homeIcon = findViewById(R.id.activity_main_menuContainer_logo);
+        ImageButton safteybutton = findViewById(R.id.activity_main_menuContainer_emergencyButton);
 
-
-        ImageButton menuButton = (ImageButton) findViewById(R.id.activity_main_menuContainer_menuButton);
-
+        safteybutton.setOnClickListener(safetyButtonListener);
+        homeIcon.setOnClickListener(homePageListener);
         main_layout.setOnClickListener(closeMenuListener);
         menuButton.setOnClickListener(menuButtonListener);
     }
@@ -87,21 +115,77 @@ public class MainActivity extends AppCompatActivity {
      */
 
     private void onClickMenuSetup(){
+        View menuView = factory.inflate(R.layout.menu_layout,null);
+        menu.addView(menuView);
+        menuPresent = true;
+
         View.OnClickListener menuItemListener = new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Log.d(TAG, "onClick: MenuItemClicked! "+v.getResources().getResourceName(v.getId()));
-                QueryDataBase query = new QueryDataBase();
-                query.doInBackground(extractMenuButtonString(v.getResources().getResourceName(v.getId())));
+                String buttonName = extractMenuButtonString(v.getResources().getResourceName(v.getId()));
+                if (buttonName.equals("website")){
+                    Log.d(TAG, "onClick: website attempt launch");
+                    Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://www.intostudy.com/en-gb/universities/newcastle-university"));
+                    startActivity(browserIntent);
+                }
+                else if(buttonName.equals("maps")){
+                    Log.d(TAG, "onClick: Maps being processed");
+                    startMap();
+                }
+                else if((!(buttonName == currentLayout))){
+                    View myView = null;
+                    switch (buttonName) {
+                        case "homepage":
+                            Log.d(TAG, "buildQuery: homepage");
+                            myView = factory.inflate(R.layout.activity_homepage,null);
+                            break;
+                        case "aboutUs":
+                            Log.d(TAG, "quereyDataBase: about us");
+                            main_layout.removeAllViews();
+                            myView = factory.inflate(R.layout.activity_aboutus,null);
+                            break;
+                        case "notifications":
+                            myView = factory.inflate(R.layout.activity_notifications,null);
+                            break;
+                        case "thingsToDo": case "placesToEat": case "nclEssentials": case "publicTransport": case "safetey": case "societys":
+                            myView = factory.inflate(R.layout.informationmanager_activity,null);
+                            queryDataBase(buttonName);
+                            break;
+                        default:
+                            break;
+                    }
+                    if (myView != null){
+                        main_layout.removeAllViews();
+                        main_layout.addView(myView);
+                        currentLayout = buttonName;
+                    }
+                }
                 menu.removeAllViews();
                 menuPresent = false;
             }
         };
-
         LinkedList<ConstraintLayout> menuData = populateMenuData();
         for(ConstraintLayout menuItem: menuData){
             menuItem.setOnClickListener(menuItemListener);
         }
+        ImageView homePageImage = findViewById(R.id.menu_layout_homepage);
+        homePageImage.setOnClickListener(menuItemListener);
+
+    }
+
+    private void startMap(){
+        queryDataBase("maps");
+        Intent mapsIntent = new Intent(this,MapsActivity.class);
+        Bundle extras = mapsIntent.getExtras();
+        extras.putDoubleArray("POINTER_POSX",pointerPosX);
+        extras.putDoubleArray("POINTER_POSY",pointerPosY);
+        extras.putStringArray("POINTER_NAMES",names);
+        startActivity(mapsIntent);
+    }
+    private void queryDataBase(String buttonName){
+        QueryDataBase queryDataBase = new QueryDataBase();
+        queryDataBase.doInBackground(buttonName);
     }
 
     /** A simple method to extract the unique name based id of the buttons in the menu.
@@ -143,6 +227,7 @@ public class MainActivity extends AppCompatActivity {
         ConstraintLayout safteyButton = findViewById(R.id.menu_layout_safety);
         ConstraintLayout mapsButton = findViewById(R.id.menu_layout_maps);
         ConstraintLayout societysButton = findViewById(R.id.menu_layout_societys);
+        ConstraintLayout websiteButton = findViewById((R.id.menu_layout_website));
 
         menuData.add(aboutUsButton);
         menuData.add(notificationButton);
@@ -153,6 +238,7 @@ public class MainActivity extends AppCompatActivity {
         menuData.add(safteyButton);
         menuData.add(mapsButton);
         menuData.add(societysButton);
+        menuData.add(websiteButton);
         return menuData;
     }
     /** Below is a private class which uses threads to perform background activity for the user.
@@ -165,12 +251,11 @@ public class MainActivity extends AppCompatActivity {
         @Override
         protected void onPostExecute(InformationManager s) {
             super.onPostExecute(s);
+            //Finish this method.
             View dataList = factory.inflate(R.layout.informationmanager_activity, null);
             ListView listPages = findViewById(R.id.information_manager_layout_listView);
             Information_ListView_Adapter layoutAdapter = new Information_ListView_Adapter(MainActivity.this, R.layout.information_layout, s.getInformationObjects());
             listPages.setAdapter(layoutAdapter);
-            main_layout.removeAllViews();
-            main_layout.addView(dataList);
             Log.d(TAG, "onPostExecute: Finished!");
         }
 
