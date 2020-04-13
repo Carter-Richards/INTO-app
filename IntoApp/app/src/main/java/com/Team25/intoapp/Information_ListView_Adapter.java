@@ -47,8 +47,8 @@ public class Information_ListView_Adapter extends ArrayAdapter {
             viewHolder = (Information_ListView_Adapter.ViewHolder) convertView.getTag();
         }
         InformationObject currentEntry = information.get(position);
-        viewHolder.ioName.setText(currentEntry.getName());
-        viewHolder.ioSummary.setText(currentEntry.getSummary());
+        viewHolder.ioName.setText(currentEntry.getTitle());
+        viewHolder.ioSummary.setText(currentEntry.getDescription());
 //        viewHolder.ioImage.setImageResource(R.id.newimage);
         return convertView;
     }
