@@ -9,6 +9,20 @@
     android:orientation="vertical"
     android:visibility="visible">
 
+    <ScrollView
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/activity_main_menuContainer">
+
+        <LinearLayout
+            android:id="@+id/activity_main_otherContainer"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical" />
+    </ScrollView>
+
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/activity_main_menuContainer"
         android:layout_width="0dp"
@@ -69,17 +83,6 @@
             app:srcCompat="@drawable/menu_icon" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
-
-    <LinearLayout
-        android:id="@+id/activity_main_otherContainer"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        app:layout_constraintEnd_toEndOf="@+id/activity_main_menuContainer"
-        app:layout_constraintStart_toStartOf="@+id/activity_main_menuContainer"
-        app:layout_constraintTop_toBottomOf="@+id/activity_main_menuContainer">
-
-    </LinearLayout>
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline4"

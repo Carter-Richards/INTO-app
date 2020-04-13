@@ -17,13 +17,13 @@ public class Information_ListView_Adapter extends ArrayAdapter {
     private static final String TAG = "FeedAdapter";
     private final int layoutResource;
     private final LayoutInflater layoutInflater;
-    private List<InformationObject> applications;
+    private List<InformationObject> information;
 
-    public Information_ListView_Adapter(@NonNull Context context, int resource, List<InformationObject> applications) {
+    public Information_ListView_Adapter(@NonNull Context context, int resource, List<InformationObject> information) {
         super(context, resource);
         this.layoutInflater = LayoutInflater.from(context);
         this.layoutResource = resource;
-        this.applications = applications;
+        this.information = information;
     }
 
     /**
@@ -31,7 +31,7 @@ public class Information_ListView_Adapter extends ArrayAdapter {
      */
     @Override
     public int getCount() {
-        return applications.size();
+        return information.size();
     }
 
 
@@ -46,7 +46,7 @@ public class Information_ListView_Adapter extends ArrayAdapter {
         } else {
             viewHolder = (Information_ListView_Adapter.ViewHolder) convertView.getTag();
         }
-        InformationObject currentEntry = applications.get(position);
+        InformationObject currentEntry = information.get(position);
         viewHolder.ioName.setText(currentEntry.getTitle());
         viewHolder.ioSummary.setText(currentEntry.getDescription());
 //        viewHolder.ioImage.setImageResource(R.id.newimage);

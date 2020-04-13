@@ -9,7 +9,7 @@
     android:background="#333333">
 
     <ImageView
-        android:id="@+id/menu_image"
+        android:id="@+id/menu_layout_homepage"
         android:layout_width="150dp"
         android:layout_height="150dp"
         app:layout_constraintEnd_toEndOf="parent"
@@ -25,9 +25,43 @@
         android:scrollbars="vertical"
         android:verticalScrollbarPosition="right"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/menu_image">
+        app:layout_constraintTop_toBottomOf="@+id/menu_layout_homepage">
 
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/menu_layout_societys"
+            android:layout_width="0dp"
+            android:layout_height="51dp"
+            android:layout_marginTop="8dp"
+            android:background="#808080"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/menu_layout_maps">
+
+            <ImageView
+                android:id="@+id/menu_layout_logo_societys"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:layout_marginStart="4dp"
+                android:layout_marginLeft="4dp"
+                android:layout_marginTop="1dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:srcCompat="@drawable/societys" />
+
+            <TextView
+                android:id="@+id/menu_object_text_societys"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Societys"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/menu_layout_logo_societys"
+                app:layout_constraintTop_toTopOf="parent" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/menu_layout_aboutUs"
@@ -321,17 +355,17 @@
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/menu_layout_societys"
+            android:id="@+id/menu_layout_website"
             android:layout_width="0dp"
             android:layout_height="51dp"
             android:layout_marginTop="8dp"
             android:background="#808080"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/menu_layout_maps">
+            app:layout_constraintTop_toBottomOf="@+id/menu_layout_societys">
 
             <ImageView
-                android:id="@+id/menu_layout_logo_societys"
+                android:id="@+id/menu_layout_logo_website"
                 android:layout_width="48dp"
                 android:layout_height="48dp"
                 android:layout_marginStart="4dp"
@@ -339,16 +373,16 @@
                 android:layout_marginTop="1dp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:srcCompat="@drawable/societys" />
+                app:srcCompat="@drawable/intowebsite" />
 
             <TextView
-                android:id="@+id/menu_object_text_societys"
+                android:id="@+id/menu_object_text_website"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Societys"
+                android:text="Website"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/menu_layout_logo_societys"
+                app:layout_constraintStart_toEndOf="@+id/menu_layout_logo_website"
                 app:layout_constraintTop_toTopOf="parent" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
