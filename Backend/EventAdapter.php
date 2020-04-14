@@ -7,10 +7,12 @@ class EventAdapter{
     private $dbConn;
     private $connectObj;
 
+    //Can throw PDOException if error occurs when connecting to DB
     public function __construct(){
         $this->connectObj = new DatabaseConnection();
         $this->connectObj->connect();
         $this->dbConn = $this->connectObj->connection;
+        
     }
 
     public function __destruct(){
@@ -63,7 +65,7 @@ class EventAdapter{
     }
 
     public function getEventsAfterDateInCategory($date, $category){
-        $query = $this->dbConn->prepare(  'SELECT Title, Description, Date, ST_AsText(Location), ImgPath FROM events 
+        $query = $this->dbConn->prepare(  'SELECT Title, Description, Date, ST_AsText(Location), ImgPath, Category FROM events 
                             WHERE Date > :date AND Category = :category');
         $query->bindParam(':date', $date);
         $query->bindParam(':category', $category);
@@ -73,7 +75,7 @@ class EventAdapter{
     }
 
     public function getEventsBeforeDateInCategory($date, $category){
-        $query = $this->dbConn->prepare(  'SELECT Title, Description, Date, ST_AsText(Location), ImgPath FROM events 
+        $query = $this->dbConn->prepare(  'SELECT Title, Description, Date, ST_AsText(Location), ImgPath, Category FROM events 
                             WHERE Date < :date AND Category = :category');
         $query->bindparam(':date', $date);
         $query->bindParam(':category', $category);
@@ -83,7 +85,7 @@ class EventAdapter{
     }
 
     public function getEventsOnDateInCategory($date, $category){
-        $query = $this->dbConn->prepare(  'SELECT Title, Description, Date, ST_AsText(Location), ImgPath FROM events 
+        $query = $this->dbConn->prepare(  'SELECT Title, Description, Date, ST_AsText(Location), ImgPath, Category FROM events 
                             WHERE Date = :date AND Category = :category');
         $query->bindparam(':date', $date);
         $query->bindParam(':category', $category);

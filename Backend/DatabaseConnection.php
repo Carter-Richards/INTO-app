@@ -4,6 +4,7 @@ class DatabaseConnection{
     private $settings = array();
     public $connection;
 
+    //Imports and parses text file to get database connection settings
     public function __construct(){
         $this->settings['Host'] = "";
         $this->settings['Name'] = "";
@@ -35,18 +36,16 @@ class DatabaseConnection{
         fclose($fh);
     }
 
+    //Attempts to connect to database, can throw PDOException
     public function connect(){
         try{
-            $this->connection = new PDO("mysql:host=" . $this->settings['Host'] . ";dbname=" . $this->settings['Name'], $this->settings['Username'], $this->settings['Password']);
-            //Code from top answer of https://stackoverflow.com/questions/60174/how-can-i-prevent-sql-injection-in-php, this is to allow the connection to use real prepared statements, which guards against SQL injection
-            $this->connection->setAttribute(PDO::ATTR_EMULATE_PREPARES, false);
-            $this->connection->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+        $this->connection = new PDO("mysql:host=" . $this->settings['Host'] . ";dbname=" . $this->settings['Name'], $this->settings['Username'], $this->settings['Password']);
+        //Code from top answer of https://stackoverflow.com/questions/60174/how-can-i-prevent-sql-injection-in-php, this is to allow the connection to use real prepared statements, which guards against SQL injection
+        $this->connection->setAttribute(PDO::ATTR_EMULATE_PREPARES, false);
+        $this->connection->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION); }
+        catch(PDOException $PDOe){
+            throw new PDOException;
         }
-         catch (PDOException $PDOe) {
-            print("ERROR: Could not create connection to database");
-            print($PDOe);
-        } 
-        
     }
 
     public function __destruct(){
