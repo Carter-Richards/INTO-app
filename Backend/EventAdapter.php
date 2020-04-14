@@ -62,6 +62,36 @@ class EventAdapter{
         return($result);
     }
 
+    public function getEventsAfterDateInCategory($date, $category){
+        $query = $this->dbConn->prepare(  'SELECT Title, Description, Date, ST_AsText(Location), ImgPath FROM events 
+                            WHERE Date > :date AND Category = :category');
+        $query->bindParam(':date', $date);
+        $query->bindParam(':category', $category);
+        $query->execute();
+        $result = $this->makeFullImgLink($query->fetchAll(PDO::FETCH_ASSOC));
+        return($result);
+    }
+
+    public function getEventsBeforeDateInCategory($date, $category){
+        $query = $this->dbConn->prepare(  'SELECT Title, Description, Date, ST_AsText(Location), ImgPath FROM events 
+                            WHERE Date < :date AND Category = :category');
+        $query->bindparam(':date', $date);
+        $query->bindParam(':category', $category);
+        $query->execute();
+        $result = $this->makeFullImgLink($query->fetchAll(PDO::FETCH_ASSOC));
+        return($result);
+    }
+
+    public function getEventsOnDateInCategory($date, $category){
+        $query = $this->dbConn->prepare(  'SELECT Title, Description, Date, ST_AsText(Location), ImgPath FROM events 
+                            WHERE Date = :date AND Category = :category');
+        $query->bindparam(':date', $date);
+        $query->bindParam(':category', $category);
+        $query->execute();
+        $result = $this->makeFullImgLink($query->fetchAll(PDO::FETCH_ASSOC));
+        return($result);
+    }
+
     public function parseRecords($records){
         //Code adapted from https://www.codeofaninja.com/2017/02/create-simple-rest-api-in-php.html
 

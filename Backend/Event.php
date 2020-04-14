@@ -6,17 +6,33 @@
     
     $mode = filter_input(INPUT_GET, 'mode', FILTER_SANITIZE_STRING);
     $date = filter_input(INPUT_GET, 'date', FILTER_SANITIZE_STRING);
+    $category = filter_input(INPUT_GET, 'category', FILTER_SANITIZE_STRING);
     //seperate query values out
 
     if(isset($mode)){
         if($mode=='after'){
-            $result = $adapter->getEventsAfterDate($date);
-            http_response_code(200);
-            echo json_encode($result);
+            if(isset($category){
+                $result = $adapter->getEventsAfterDateInCategory($date, $category);
+                http_response_code(200);
+                echo json_encode($result);
+            }
+            else{
+                $result = $adapter->getEventsAfterDate($date);
+                http_response_code(200);
+                echo json_encode($result);
+            }
         }
         if($mode=='before'){
-            $result = $adapter->getEventsBeforeDate($date);
-            print_r(json_encode($result, JSON_UNESCAPED_SLASHES));
+            if(isset($category){
+                $result = $adapter->getEventsBeforeDateInCategory($date, $category);
+                http_response_code(200);
+                echo json_encode($result);
+            }
+            else{
+                $result = $adapter->getEventsBeforeDate($date);
+                http_response_code(200);
+                echo json_encode($result);
+            }
         }
         if($mode=='on'){
             //needs implementation in EventAdapter
