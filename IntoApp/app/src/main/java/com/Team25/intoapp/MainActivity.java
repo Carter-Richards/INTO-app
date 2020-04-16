@@ -21,6 +21,8 @@ import com.google.android.gms.maps.SupportMapFragment;
 
 import java.io.*;
 import java.net.*;
+import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.LinkedList;
 
 public class MainActivity extends AppCompatActivity {
@@ -276,43 +278,43 @@ public class MainActivity extends AppCompatActivity {
          */
         private String buildQuery(String buttonID) {
             String actualQuery = "";
+            //actualQuery is the URL used to connect to the database
             switch (buttonID) {
-                case "aboutUs":
-                    Log.d(TAG, "queryDataBase: case 1");
-                    //actualQuery is the URL used to connect to the database
-                    actualQuery = "";
-                    break;
                 case "notifications":
-                    Log.d(TAG, "queryDataBase: case 2");
-                    actualQuery = "";
+                    Log.d(TAG, "queryDataBase: case notifications");
+                    LocalDate date = java.time.LocalDate.now();
+                    String dString = date.toString();
+                    LocalTime time = java.time.LocalTime.now();
+                    String tString = time.toString().substring(0,8);
+                    actualQuery = "localhost/API/src/Event.php?mode=after&date=" + dString + " " + tString + "&category=notif";
                     break;
                 case "thingsToDo":
-                    Log.d(TAG, "queryDataBase: case 3");
-                    actualQuery = "";
+                    Log.d(TAG, "queryDataBase: case thingsToDo");
+                    actualQuery = "localhost/API/src/Event.php?category=things";
                     break;
                 case "placesToEat":
-                    Log.d(TAG, "queryDataBase: case 4");
-                    actualQuery = "";
+                    Log.d(TAG, "queryDataBase: case placesToEat");
+                    actualQuery = "localhost/API/src/Event.php?category=eat";
                     break;
                 case "nclEssentials":
-                    Log.d(TAG, "queryDataBase: case 5");
-                    actualQuery = "";
+                    Log.d(TAG, "queryDataBase: case nclEssentials");
+                    actualQuery = "localhost/API/src/Event.php?category=ncl";
                     break;
                 case "publicTransport":
-                    Log.d(TAG, "queryDataBase: case 6");
-                    actualQuery = "";
+                    Log.d(TAG, "queryDataBase: case publicTransport");
+                    actualQuery = "localhost/API/src/Event.php?category=transport";
                     break;
                 case "safety":
-                    Log.d(TAG, "queryDataBase: case 7");
-                    actualQuery = "";
+                    Log.d(TAG, "queryDataBase: case safety");
+                    actualQuery = "localhost/API/src/Event.php?category=safety";
                     break;
                 case "maps":
-                    Log.d(TAG, "queryDataBase: case 8");
-                    actualQuery = "";
+                    Log.d(TAG, "queryDataBase: case maps");
+                    actualQuery = "localhost/API/src/Event.php?category=maps";
                     break;
                 case "societies":
-                    Log.d(TAG, "queryDataBase: case 9");
-                    actualQuery = "";
+                    Log.d(TAG, "queryDataBase: case societies");
+                    actualQuery = "localhost/API/src/Event.php?category=soc";
                     break;
                 default:
                     break;
