@@ -54,9 +54,16 @@
             }
         }
         if($mode=='on'){
-            //needs implementation in EventAdapter
-            http_response_code(501); //Not Yet Implemented
-            echo("Not Yet Implemented");
+            if(isset($category)){
+                $result = $adapter->getEventsOnDateInCategory($date, $category);
+                http_response_code(200); //OK
+                echo json_encode($result);
+            }
+            else{
+                $result = $adapter->getEventsOnDate($date);
+                http_response_code(200); //OK
+                echo json_encode($result);
+            }
         }
     }
     else{

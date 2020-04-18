@@ -73,9 +73,13 @@ class EventAdapter{
 
     //Gets all events on a given date regardless of category
     public function getEventsOnDate($date){
+        $lowerBoundDate = substr($date, 0, 10).' 00:00:00';
+        $upperBoundDate = substr($date, 0, 10).' 23:59:59';
+
         $query = $this->dbConn->prepare(  'SELECT Title, Description, Date, ST_AsText(Location), ImgPath FROM events 
-                            WHERE Date = :date');
-        $query->bindparam(':date', $date);
+                            WHERE Date > :lowerBoundDate AND Date < :upperBoundDate');
+        $query->bindparam(':lowerBoundDate', $lowerBoundDate);
+        $query->bindparam(':upperBoundDate', $upperBoundDate);
         $query->execute();
         $result = $this->makeFullImgLink($query->fetchAll(PDO::FETCH_ASSOC));
         return($result);
