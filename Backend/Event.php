@@ -1,5 +1,17 @@
 <?php
 
+/*
+ * Event.php
+ *
+ * Web Interface
+ * 
+ * Interprets the client call parameters, processes them and then calls the appropriate
+ * table adapter function to query the database. Sets HTTP response code and then returns
+ * result of query (assuming request was valid)
+ *
+ * Author: Ethan Lewis
+ */
+
     include('EventAdapter.php');
 
     //Attempt to create table adapter, if DB connection error occurs, set status to 500,

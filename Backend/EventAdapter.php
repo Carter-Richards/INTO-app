@@ -1,5 +1,17 @@
 <?php
 
+/*
+ * EventAdapter.php
+ *
+ * Interface for Database
+ * 
+ * Provides a multitude of public functions which perform basic paramaterized SELECT SQL queries
+ * on the serverside database.
+ *
+ * Author: Ethan Lewis
+ */
+
+
 include 'DatabaseConnection.php';
 
 class EventAdapter{
