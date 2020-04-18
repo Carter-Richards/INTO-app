@@ -19,6 +19,7 @@ class EventAdapter{
         $this->connectObj->__destruct();
     }
 
+    //Takes the image URI and makes it fully qualified, eg TestImg.png -> /Images/TestImg.png
     public function makeFullImgLink($recordSet){
         for($x = 0; $x < count($recordSet); $x++){
             foreach($recordSet[$x] as $field => $value){
@@ -30,6 +31,7 @@ class EventAdapter{
         return($recordSet);
     }
 
+    //Gets all events regardless of date or category
     public function getAllEvents(){
         $query = $this->dbConn->prepare(  'SELECT Title, Description, Date, ST_AsText(Location), ImgPath FROM events');
         $query->execute();
@@ -37,6 +39,7 @@ class EventAdapter{
         return($result);
     }
 
+    //Gets all events after a given date regardless of category
     public function getEventsAfterDate($date){
         $query = $this->dbConn->prepare(  'SELECT Title, Description, Date, ST_AsText(Location), ImgPath FROM events 
                             WHERE Date > :date');
@@ -46,6 +49,7 @@ class EventAdapter{
         return($result);
     }
 
+    //Gets all events before a given date regardless of category
     public function getEventsBeforeDate($date){
         $query = $this->dbConn->prepare(  'SELECT Title, Description, Date, ST_AsText(Location), ImgPath FROM events 
                             WHERE Date < :date');
@@ -55,6 +59,7 @@ class EventAdapter{
         return($result);
     }
 
+    //Gets all events on a given date regardless of category
     public function getEventsOnDate($date){
         $query = $this->dbConn->prepare(  'SELECT Title, Description, Date, ST_AsText(Location), ImgPath FROM events 
                             WHERE Date = :date');
@@ -64,8 +69,9 @@ class EventAdapter{
         return($result);
     }
 
+    //Gets all events after a given date in a given category
     public function getEventsAfterDateInCategory($date, $category){
-        $query = $this->dbConn->prepare(  'SELECT Title, Description, Date, ST_AsText(Location), ImgPath, Category FROM events 
+        $query = $this->dbConn->prepare(  'SELECT Title, Description, Date, ST_AsText(Location), ImgPath FROM events 
                             WHERE Date > :date AND Category = :category');
         $query->bindParam(':date', $date);
         $query->bindParam(':category', $category);
@@ -74,8 +80,9 @@ class EventAdapter{
         return($result);
     }
 
+    //Gets all events before a given date in a given category
     public function getEventsBeforeDateInCategory($date, $category){
-        $query = $this->dbConn->prepare(  'SELECT Title, Description, Date, ST_AsText(Location), ImgPath, Category FROM events 
+        $query = $this->dbConn->prepare(  'SELECT Title, Description, Date, ST_AsText(Location), ImgPath FROM events 
                             WHERE Date < :date AND Category = :category');
         $query->bindparam(':date', $date);
         $query->bindParam(':category', $category);
@@ -84,8 +91,9 @@ class EventAdapter{
         return($result);
     }
 
+    //Gets all events on a given date in a given category
     public function getEventsOnDateInCategory($date, $category){
-        $query = $this->dbConn->prepare(  'SELECT Title, Description, Date, ST_AsText(Location), ImgPath, Category FROM events 
+        $query = $this->dbConn->prepare(  'SELECT Title, Description, Date, ST_AsText(Location), ImgPath FROM events 
                             WHERE Date = :date AND Category = :category');
         $query->bindparam(':date', $date);
         $query->bindParam(':category', $category);
@@ -94,6 +102,17 @@ class EventAdapter{
         return($result);
     }
 
+    //Gets all events when on the category is specified
+    public function getEventsInCategory($category){
+        $query = $this->dbConn->prepare(  'SELECT Title, Description, Date, ST_AsText(Location), ImgPath FROM events 
+                            WHERE Category = :category');
+        $query->bindParam(':category', $category);
+        $query->execute();
+        $result = $this->makeFullImgLink($query->fetchAll(PDO::FETCH_ASSOC));
+        return($result);
+    }
+
+    /*Takes raw output from queries and restructures it into a jagged array that represents the records    */
     public function parseRecords($records){
         //Code adapted from https://www.codeofaninja.com/2017/02/create-simple-rest-api-in-php.html
 
