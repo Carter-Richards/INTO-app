@@ -25,15 +25,16 @@ public class ExtractInformationObjects {
     }
 
     public void readMessagesArray(JsonReader reader, LinkedList<InformationObject> informationObjects) throws IOException {
-
+        LinkedList<InformationObject> infoObjs = informationObjects;
         reader.beginArray();
         while (reader.hasNext()) {
-            readMessage(reader, informationObjects);
+            infoObjs = readMessage(reader, infoObjs);
         }
         reader.endArray();
+        this.informationObjects = infoObjs;
     }
 
-    public void readMessage(JsonReader reader, LinkedList<InformationObject> informationObjects) throws IOException {
+    public LinkedList<InformationObject> readMessage(JsonReader reader, LinkedList<InformationObject> informationObjects) throws IOException {
         InformationObject infoObj = new InformationObject(null, null, null, null, null);
 
         reader.beginObject();
@@ -55,6 +56,7 @@ public class ExtractInformationObjects {
         }
         reader.endObject();
         informationObjects.add(infoObj);
+        return informationObjects;
     }
 
     public LinkedList<InformationObject> getInformationObjects() {
