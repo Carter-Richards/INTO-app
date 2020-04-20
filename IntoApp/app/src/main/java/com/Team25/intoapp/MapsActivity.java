@@ -12,6 +12,7 @@ import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.MapStyleOptions;
 import com.google.android.gms.maps.model.MarkerOptions;
 
 import java.util.Locale;
@@ -22,16 +23,26 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     private GoogleMap mMap;
     boolean nightView = false;
     String currentMapType = "com.Team25.intoapp:id/btnnormal";
+    double[] pointerPosX;
+    double[] pointerPosY;
+    String[] names;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_map_manager);
+        setContentView(R.layout.activity_map_manger);
+        Bundle extras = getIntent().getExtras();
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
-
+        try{
+            pointerPosX = extras.getDoubleArray("POINTER_POSX");
+            pointerPosY = extras.getDoubleArray("POINTER_POSY");
+            names = extras.getStringArray("POINTER_NAMES");
+        }catch(Exception e){
+            Log.e(TAG, "onCreate: Error passing map pointer data");
+        }
         View.OnClickListener mapButtonListener = new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -62,10 +73,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         btnHybrid.setOnClickListener(mapButtonListener);
         btnTerrain.setOnClickListener(mapButtonListener);
 
-        double[] mapPosX = savedInstanceState.getDoubleArray("POINTER_POSX");
-        double[] mapPosY = savedInstanceState.getDoubleArray("POINTER_POSY");
-        String[] names = savedInstanceState.getStringArray("POINTER_NAMES");
-        mapSetup(mapPosX,mapPosY,names);
     }
 
 
@@ -81,7 +88,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     @Override
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
-
+        mapSetup(pointerPosX,pointerPosY,names);
         // Add a marker in Sydney and move the camera
         LatLng sydney = new LatLng(-34, 151);
         mMap.addMarker(new MarkerOptions().position(sydney).title("Marker in Sydney"));
@@ -107,6 +114,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     }
 
     private void mapSetup(double[] mapPosX,double[] mapPosY,String[] names){
+        Log.e(TAG, "mapSetup: maps setup attempted");
         for (int i = 0; i<mapPosX.length;i++){
             LatLng pointerPos = new LatLng(mapPosX[i],mapPosY[i]);
             String snippet = String.format(Locale.getDefault(),
