@@ -1,6 +1,9 @@
 package com.Team25.intoapp;
 
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,15 +14,16 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
+import java.io.InputStream;
 import java.util.List;
 
 public class Information_ListView_Adapter extends ArrayAdapter {
-    private static final String TAG = "FeedAdapter";
+    private static final String TAG = "InformationListViewAdap";
     private final int layoutResource;
     private final LayoutInflater layoutInflater;
-    private List<InformationObject> information;
+    private List<BitmapInformationObject> information;
 
-    public Information_ListView_Adapter(@NonNull Context context, int resource, List<InformationObject> information) {
+    public Information_ListView_Adapter(@NonNull Context context, int resource, List<BitmapInformationObject> information) {
         super(context, resource);
         this.layoutInflater = LayoutInflater.from(context);
         this.layoutResource = resource;
@@ -38,6 +42,7 @@ public class Information_ListView_Adapter extends ArrayAdapter {
     @NonNull
     @Override
     public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
+        Log.e(TAG, "getView: working?");
         Information_ListView_Adapter.ViewHolder viewHolder;
         if (convertView == null) {
             convertView = layoutInflater.inflate(layoutResource, parent, false);
@@ -46,13 +51,16 @@ public class Information_ListView_Adapter extends ArrayAdapter {
         } else {
             viewHolder = (Information_ListView_Adapter.ViewHolder) convertView.getTag();
         }
-        InformationObject currentEntry = information.get(position);
+        BitmapInformationObject currentEntry = information.get(position);
         viewHolder.ioName.setText(currentEntry.getTitle());
         viewHolder.ioSummary.setText(currentEntry.getDescription());
-//        viewHolder.ioImage.setImageResource(R.id.newimage);
+        if(currentEntry.getImg() == null){
+            viewHolder.ioImage.setImageResource(R.drawable.errorimage);
+        }else{
+            viewHolder.ioImage.setImageBitmap(currentEntry.getImg());
+        }
         return convertView;
     }
-
     private class ViewHolder {
         final TextView ioName;
         final ImageView ioImage;

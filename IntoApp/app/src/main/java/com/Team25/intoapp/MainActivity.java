@@ -1,5 +1,7 @@
 package com.Team25.intoapp;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -18,9 +20,9 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
 
 import com.google.android.gms.maps.SupportMapFragment;
-
-import java.io.*;
-import java.net.*;
+import java.io.InputStream;
+import java.net.URL;
+import java.net.URLConnection;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.LinkedList;
@@ -32,9 +34,10 @@ public class MainActivity extends AppCompatActivity {
     private LinearLayout menu;
     private LayoutInflater factory;
     private boolean menuPresent = false;
-    private double[] pointerPosX;
-    private double[] pointerPosY;
-    private String[] names;
+    private double[] pointerPosX = {-26.00109,-25.00109,-24.00109,-23.00109};
+    private double[] pointerPosY = {140.01316,140.01316,140.01316,140.01316};
+    private String[] names = {"one","two","three","four"};
+    private View viewToAdd;
 
     /** So the on create method is called when the application is initially launched. I have configured the manifest file to launch this method first.
      * The Log.d tags are just for us to see in the logcat editor to have a better understanding on what is happening under the hood.
@@ -72,8 +75,17 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if(currentLayout != "safety"){
+                    currentLayout = "saftey";
+                    viewToAdd = null;
+                    View safteyPage = factory.inflate(R.layout.informationmanager_activity,null);
+                    viewToAdd = safteyPage;
+                    TextView textView = safteyPage.findViewById(R.id.information_manager_layout_title);
+                    textView.setText("Saftey");
                     QueryDataBase query = new QueryDataBase();
-                    query.doInBackground("safety");
+                    query.execute("safety");
+                    safteyPage = viewToAdd;
+                    main_layout.removeAllViews();
+                    main_layout.addView(safteyPage);
                 }
             }
         };
@@ -149,10 +161,17 @@ public class MainActivity extends AppCompatActivity {
                             break;
                         case "notifications":
                             myView = factory.inflate(R.layout.activity_notifications,null);
+                            viewToAdd = myView;
+                            queryDataBase(buttonName);
+                            myView = viewToAdd;
                             break;
                         case "thingsToDo": case "placesToEat": case "nclEssentials": case "publicTransport": case "safetey": case "societys":
                             myView = factory.inflate(R.layout.informationmanager_activity,null);
+                            TextView name = (TextView) myView.findViewById(R.id.information_manager_layout_title);
+                            name.setText(buttonName);
+                            viewToAdd = myView;
                             queryDataBase(buttonName);
+                            myView = viewToAdd;
                             break;
                         default:
                             break;
@@ -179,17 +198,17 @@ public class MainActivity extends AppCompatActivity {
     private void startMap(){
         queryDataBase("maps");
         Intent mapsIntent = new Intent(this,MapsActivity.class);
-        Bundle extras = mapsIntent.getExtras();
-        if(pointerPosX != null & pointerPosY != null & names != null) {
-            extras.putDoubleArray("POINTER_POSX", pointerPosX);
-            extras.putDoubleArray("POINTER_POSY", pointerPosY);
-            extras.putStringArray("POINTER_NAMES", names);
-            startActivity(mapsIntent);
-        } else Log.d(TAG, "startMap: Incomplete map data");
+        if(pointerPosX != null && pointerPosY != null && names != null){
+            Log.e(TAG, "startMap: values passed to maps properly");
+            mapsIntent.putExtra("POINTER_POSX",pointerPosX);
+            mapsIntent.putExtra("POINTER_POSY",pointerPosY);
+            mapsIntent.putExtra("POINTER_NAMES",names);
+        }
+        startActivity(mapsIntent);
     }
     private void queryDataBase(String buttonName){
         QueryDataBase queryDataBase = new QueryDataBase();
-        queryDataBase.doInBackground(buttonName);
+        queryDataBase.execute(buttonName);
     }
 
     /** A simple method to extract the unique name based id of the buttons in the menu.
@@ -252,32 +271,61 @@ public class MainActivity extends AppCompatActivity {
      *  However will have to be programmed correctly.
      */
     private class QueryDataBase extends AsyncTask<String,Void,InformationManager> {
+
+
         @Override
-        protected void onPostExecute(InformationManager s) {
-            super.onPostExecute(s);
-            //Finish this method.
-            View dataList = factory.inflate(R.layout.informationmanager_activity, null);
-            ListView listPages = findViewById(R.id.information_manager_layout_listView);
-            Information_ListView_Adapter layoutAdapter = new Information_ListView_Adapter(MainActivity.this, R.layout.information_layout, s.getInformationObjects());
-            listPages.setAdapter(layoutAdapter);
+        protected void onPostExecute(InformationManager informationManager) {
+            super.onPostExecute(informationManager);
+            if(informationManager.getName().equals("notifications")){
+                ListView listPages = viewToAdd.findViewById((R.id.notifications_listView));
+                Information_Layout_Adapter layout_adapter = new Information_Layout_Adapter(MainActivity.this,R.layout.information_layout,informationManager.getInformationObjects());
+                listPages.setAdapter(layout_adapter);
+            }else{
+                ListView listPages = viewToAdd.findViewById(R.id.information_manager_layout_listView);
+                Information_ListView_Adapter layoutAdapter = new Information_ListView_Adapter(MainActivity.this, R.layout.information_layout, informationManager.getBitmapInformationObjects());
+                listPages.setAdapter(layoutAdapter);
+            }
+
             Log.d(TAG, "onPostExecute: Finished!");
         }
 
-        /** This method creates the query and then creates an information manager object with the sorted information required for the display of the information of the query.
-         * @param strings - A string or list of strings that has been passed into the inner class for processing
-         * @return - The required sorted data for display
-         */
+        private void bitmapCreation(InformationManager informationManager){
+            LinkedList<InformationObject> informationObjects = informationManager.getInformationObjects();
+            Bitmap bitmap;
+            for(InformationObject informationObject: informationObjects){
+                bitmap = null;
+                try{
+                    InputStream src = new java.net.URL(informationObject.getImgPath()).openStream();
+                    bitmap = BitmapFactory.decodeStream(src);
+                }catch(Exception e){
+                    Log.e(TAG, "getView: error loading image ",e );
+                }
+                informationManager.getBitmapInformationObjects().add(new BitmapInformationObject(informationObject.getTitle(),informationObject.getDescription(),informationObject.getLocation(),bitmap,informationObject.getDate()));
+            }
+        }
+
         @Override
         protected InformationManager doInBackground(String... strings) {
-            String query = buildQuery(strings[0]);
-            return doQuery(query);
+           String query = buildQuery(strings[0]);
+           InformationManager returnInfo = doQuery(query);
+            Log.d(TAG, "doInBackground: is this working?");
+            if(!(strings[0].equals("notifications"))){
+                bitmapCreation(returnInfo);
+            }
+            return returnInfo;
         }
 
         /** This switch class is called to build the query for the database based on the id of the button that has been clicked by the user.
          *  This will allow us to reuse the same query database method for all the users interactions greatly reducing the amount of duplicate code in our code.
          * @param buttonID - The button that has been clicked id. Which is a unique identifier for the widget.
          * @return - A string which will be the complete and specified query for the expected and wanted action.
+        /** This method oreates the query and then creates an information manager object with the sorted information required for the display of the information of the query.
+         * @param strings - A string or list of strings that has been passed into the inner class for processing
+         * @return - The required sorted data for display
          */
+
+
+
         private String buildQuery(String buttonID) {
             String actualQuery = "";
             //actualQuery is the URL used to connect to the database
@@ -323,6 +371,7 @@ public class MainActivity extends AppCompatActivity {
             }
             return actualQuery;
         }
+
 
         private InformationManager doQuery(String query) {
             Log.d(TAG, "doQuery: Start");
