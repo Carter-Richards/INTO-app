@@ -6,7 +6,7 @@ public class InformationManager {
     private String name;
     private LinkedList<String> metaData = new LinkedList<>();
 
-    public void InformationManager(String name){
+    public InformationManager(String name){
         informationObjects = new LinkedList<InformationObject>();
         this.name = name;
     }

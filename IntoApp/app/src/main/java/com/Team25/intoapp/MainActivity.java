@@ -180,10 +180,12 @@ public class MainActivity extends AppCompatActivity {
         queryDataBase("maps");
         Intent mapsIntent = new Intent(this,MapsActivity.class);
         Bundle extras = mapsIntent.getExtras();
-        extras.putDoubleArray("POINTER_POSX",pointerPosX);
-        extras.putDoubleArray("POINTER_POSY",pointerPosY);
-        extras.putStringArray("POINTER_NAMES",names);
-        startActivity(mapsIntent);
+        if(pointerPosX != null & pointerPosY != null & names != null) {
+            extras.putDoubleArray("POINTER_POSX", pointerPosX);
+            extras.putDoubleArray("POINTER_POSY", pointerPosY);
+            extras.putStringArray("POINTER_NAMES", names);
+            startActivity(mapsIntent);
+        } else Log.d(TAG, "startMap: Incomplete map data");
     }
     private void queryDataBase(String buttonName){
         QueryDataBase queryDataBase = new QueryDataBase();
@@ -324,7 +326,7 @@ public class MainActivity extends AppCompatActivity {
 
         private InformationManager doQuery(String query) {
             Log.d(TAG, "doQuery: Start");
-            InformationManager queryData = new InformationManager();
+            InformationManager queryData = new InformationManager("queryData");
             try {
                 Class.forName("com.mysql.jdbc.Driver");
                 URL url = new URL(query);
