@@ -5,7 +5,6 @@ import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.text.Layout;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,12 +13,10 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
 
-import com.google.android.gms.maps.SupportMapFragment;
 import java.io.InputStream;
 import java.net.URL;
 import java.net.URLConnection;
@@ -75,17 +72,17 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if(currentLayout != "safety"){
-                    currentLayout = "saftey";
+                    currentLayout = "safety";
                     viewToAdd = null;
-                    View safteyPage = factory.inflate(R.layout.informationmanager_activity,null);
-                    viewToAdd = safteyPage;
-                    TextView textView = safteyPage.findViewById(R.id.information_manager_layout_title);
-                    textView.setText("Saftey");
+                    View safetyPage = factory.inflate(R.layout.informationmanager_activity,null);
+                    viewToAdd = safetyPage;
+                    TextView textView = safetyPage.findViewById(R.id.information_manager_layout_title);
+                    textView.setText("safety");
                     QueryDataBase query = new QueryDataBase();
                     query.execute("safety");
-                    safteyPage = viewToAdd;
+                    safetyPage = viewToAdd;
                     main_layout.removeAllViews();
-                    main_layout.addView(safteyPage);
+                    main_layout.addView(safetyPage);
                 }
             }
         };
@@ -115,9 +112,9 @@ public class MainActivity extends AppCompatActivity {
      */
         ImageButton menuButton = findViewById(R.id.activity_main_menuContainer_menuButton);
         ImageView homeIcon = findViewById(R.id.activity_main_menuContainer_logo);
-        ImageButton safteybutton = findViewById(R.id.activity_main_menuContainer_emergencyButton);
+        ImageButton safetybutton = findViewById(R.id.activity_main_menuContainer_emergencyButton);
 
-        safteybutton.setOnClickListener(safetyButtonListener);
+        safetybutton.setOnClickListener(safetyButtonListener);
         homeIcon.setOnClickListener(homePageListener);
         main_layout.setOnClickListener(closeMenuListener);
         menuButton.setOnClickListener(menuButtonListener);
@@ -165,7 +162,7 @@ public class MainActivity extends AppCompatActivity {
                             queryDataBase(buttonName);
                             myView = viewToAdd;
                             break;
-                        case "thingsToDo": case "placesToEat": case "nclEssentials": case "publicTransport": case "safetey": case "societys":
+                        case "thingsToDo": case "placesToEat": case "nclEssentials": case "publicTransport": case "safety": case "societies":
                             myView = factory.inflate(R.layout.informationmanager_activity,null);
                             TextView name = (TextView) myView.findViewById(R.id.information_manager_layout_title);
                             name.setText(buttonName);
@@ -247,9 +244,9 @@ public class MainActivity extends AppCompatActivity {
         ConstraintLayout placesToEatButton = findViewById(R.id.menu_layout_placesToEat);
         ConstraintLayout nclEssentialsButton = findViewById(R.id.menu_layout_nclEssentials);
         ConstraintLayout publicTransportButton = findViewById(R.id.menu_layout_publicTransport);
-        ConstraintLayout safteyButton = findViewById(R.id.menu_layout_safety);
+        ConstraintLayout safetyButton = findViewById(R.id.menu_layout_safety);
         ConstraintLayout mapsButton = findViewById(R.id.menu_layout_maps);
-        ConstraintLayout societysButton = findViewById(R.id.menu_layout_societys);
+        ConstraintLayout societiesButton = findViewById(R.id.menu_layout_societies);
         ConstraintLayout websiteButton = findViewById((R.id.menu_layout_website));
 
         menuData.add(aboutUsButton);
@@ -258,9 +255,9 @@ public class MainActivity extends AppCompatActivity {
         menuData.add(placesToEatButton);
         menuData.add(nclEssentialsButton);
         menuData.add(publicTransportButton);
-        menuData.add(safteyButton);
+        menuData.add(safetyButton);
         menuData.add(mapsButton);
-        menuData.add(societysButton);
+        menuData.add(societiesButton);
         menuData.add(websiteButton);
         return menuData;
     }
@@ -306,8 +303,12 @@ public class MainActivity extends AppCompatActivity {
 
         @Override
         protected InformationManager doInBackground(String... strings) {
-           String query = buildQuery(strings[0]);
-           InformationManager returnInfo = doQuery(query);
+           //String query = buildQuery(strings[0]);
+           //InformationManager returnInfo = doQuery(query);
+
+            //TEST VALUES
+            InformationManager returnInfo = InitialiseData.InitData(strings[0]);
+            //
             Log.d(TAG, "doInBackground: is this working?");
             if(!(strings[0].equals("notifications"))){
                 bitmapCreation(returnInfo);
@@ -319,9 +320,6 @@ public class MainActivity extends AppCompatActivity {
          *  This will allow us to reuse the same query database method for all the users interactions greatly reducing the amount of duplicate code in our code.
          * @param buttonID - The button that has been clicked id. Which is a unique identifier for the widget.
          * @return - A string which will be the complete and specified query for the expected and wanted action.
-        /** This method oreates the query and then creates an information manager object with the sorted information required for the display of the information of the query.
-         * @param strings - A string or list of strings that has been passed into the inner class for processing
-         * @return - The required sorted data for display
          */
 
 

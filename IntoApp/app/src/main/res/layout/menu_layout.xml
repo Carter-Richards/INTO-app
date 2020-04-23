@@ -31,11 +31,11 @@
 
 
         <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/menu_layout_societys"
+            android:id="@+id/menu_layout_societies"
             android:layout_width="0dp"
             android:layout_height="51dp"
             android:layout_marginTop="8dp"
-            android:background="@drawable/notif_border"
+            android:background="@drawable/menu_item_border"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/menu_layout_maps">
@@ -69,7 +69,7 @@
             android:id="@+id/menu_layout_aboutUs"
             android:layout_width="0dp"
             android:layout_height="51dp"
-            android:background="@drawable/notif_border"
+            android:background="@drawable/menu_item_border"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
@@ -105,7 +105,7 @@
             android:layout_width="0dp"
             android:layout_height="51dp"
             android:layout_marginTop="8dp"
-            android:background="@drawable/notif_border"
+            android:background="@drawable/menu_item_border"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
@@ -154,7 +154,7 @@
             android:layout_width="0dp"
             android:layout_height="51dp"
             android:layout_marginTop="8dp"
-            android:background="@drawable/notif_border"
+            android:background="@drawable/menu_item_border"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
@@ -190,7 +190,7 @@
             android:layout_width="0dp"
             android:layout_height="51dp"
             android:layout_marginTop="8dp"
-            android:background="@drawable/notif_border"
+            android:background="@drawable/menu_item_border"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
@@ -226,7 +226,7 @@
             android:layout_width="0dp"
             android:layout_height="51dp"
             android:layout_marginTop="8dp"
-            android:background="@drawable/notif_border"
+            android:background="@drawable/menu_item_border"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
@@ -262,7 +262,7 @@
             android:layout_width="0dp"
             android:layout_height="51dp"
             android:layout_marginTop="8dp"
-            android:background="@drawable/notif_border"
+            android:background="@drawable/menu_item_border"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="1.0"
             app:layout_constraintStart_toStartOf="parent"
@@ -298,7 +298,7 @@
             android:layout_width="0dp"
             android:layout_height="51dp"
             android:layout_marginTop="8dp"
-            android:background="@drawable/notif_border"
+            android:background="@drawable/menu_item_border"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
@@ -346,7 +346,7 @@
             android:layout_width="0dp"
             android:layout_height="51dp"
             android:layout_marginTop="8dp"
-            android:background="@drawable/notif_border"
+            android:background="@drawable/menu_item_border"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/menu_layout_textBreaker_societysAndTools">
@@ -381,10 +381,10 @@
             android:layout_width="0dp"
             android:layout_height="51dp"
             android:layout_marginTop="8dp"
-            android:background="@drawable/notif_border"
+            android:background="@drawable/menu_item_border"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/menu_layout_societys">
+            app:layout_constraintTop_toBottomOf="@+id/menu_layout_societies">
 
             <ImageView
                 android:id="@+id/menu_layout_logo_website"
