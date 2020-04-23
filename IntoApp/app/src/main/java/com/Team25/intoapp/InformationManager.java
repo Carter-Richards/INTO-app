@@ -1,6 +1,8 @@
 package com.Team25.intoapp;
 import java.util.*;
 
+/** A basic class to hold lists of information objects created by the database querys with basic getters and a setter to obtain the information.
+ */
 public class InformationManager {
     private LinkedList<InformationObject> informationObjects;
     private LinkedList<BitmapInformationObject> bitmapInformationObject;
@@ -10,6 +12,10 @@ public class InformationManager {
     public InformationManager(String name){
         informationObjects = new LinkedList<InformationObject>();
         bitmapInformationObject = new LinkedList<BitmapInformationObject>();
+        this.name = name;
+    }
+
+    public void setName(String name) {
         this.name = name;
     }
 
