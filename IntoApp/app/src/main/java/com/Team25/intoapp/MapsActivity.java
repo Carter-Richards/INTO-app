@@ -12,28 +12,20 @@ import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
-import com.google.android.gms.maps.model.MapStyleOptions;
 import com.google.android.gms.maps.model.MarkerOptions;
 
 import java.util.Locale;
 
 public class MapsActivity extends FragmentActivity implements OnMapReadyCallback {
 
-    /** The global variables and tags required to make the map work as intended and allow the passing of information between methods.
-     */
     private static final String TAG = "MapsActivity";
     private GoogleMap mMap;
+    boolean nightView = false;
     String currentMapType = "com.Team25.intoapp:id/btnnormal";
     double[] pointerPosX;
     double[] pointerPosY;
     String[] names;
 
-    /** On create the map first initalises the fragment and loads it onto the map manager activity.
-     *  The extras is then obtained and checked to see if marker positions have been passd to be added to the map after it has been created.
-     *  @param savedInstanceState - The information and any extras needed by the oncreate method to launch the activity.
-     *  After the information has been check the buttons on the mapManager are linked to code objects and attached to a listener allowing the map to be
-     *      switched to differn't views.
-     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -50,7 +42,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         }catch(Exception e){
             Log.e(TAG, "onCreate: Error passing map pointer data");
         }
-
         View.OnClickListener mapButtonListener = new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -86,21 +77,24 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
     /**
      * Manipulates the map once available.
-     * Also automates the generation of map markers based on data passed from the database query by the bundle.
+     * This callback is triggered when the map is ready to be used.
+     * This is where we can add markers or lines, add listeners or move the camera. In this case,
+     * we just add a marker near Sydney, Australia.
+     * If Google Play services is not installed on the device, the user will be prompted to install
+     * it inside the SupportMapFragment. This method will only be triggered once the user has
+     * installed Google Play services and returned to the app.
      */
     @Override
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
         mapSetup(pointerPosX,pointerPosY,names);
-        LatLng into = new LatLng(54.9778428, -1.6166137);
-        mMap.addMarker(new MarkerOptions().position(into).title("Into Newcastle"));
-        mMap.moveCamera(CameraUpdateFactory.newLatLng(into));
+        // Add a marker in Sydney and move the camera
+        LatLng sydney = new LatLng(-34, 151);
+        mMap.addMarker(new MarkerOptions().position(sydney).title("Marker in Sydney"));
+        mMap.moveCamera(CameraUpdateFactory.newLatLng(sydney));
         setMapLongClick(mMap);
     }
 
-    /** if a user presses and holds on the map it will create a marker so they can set there own potential way points.
-     * @param map - The map being manipulated.
-     */
     private void setMapLongClick(final GoogleMap map) {
         map.setOnMapLongClickListener(new GoogleMap.OnMapLongClickListener() {
             @Override
@@ -117,12 +111,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             }
         });
     }
-
-    /** A method to place markers on the map from the database.
-     * @param mapPosX - A list of the markers x coordinates.
-     * @param mapPosY - A list of the markers y coordinates.
-     * @param names - A list of the markers names.
-     */
 
     private void mapSetup(double[] mapPosX,double[] mapPosY,String[] names){
         Log.e(TAG, "mapSetup: maps setup attempted");

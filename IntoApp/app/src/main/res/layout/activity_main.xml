@@ -30,6 +30,7 @@
         android:layout_height="60dp"
         android:background="@drawable/main_border"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
@@ -46,7 +47,6 @@
             android:layout_height="60dp"
             android:layout_marginTop="24dp"
             android:layout_marginEnd="24dp"
-            android:layout_marginRight="24dp"
             android:layout_marginBottom="24dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/guideline3"
@@ -56,31 +56,36 @@
 
         <ImageButton
             android:id="@+id/activity_main_menuContainer_emergencyButton"
-            android:layout_width="48dp"
-            android:layout_height="48dp"
+            android:layout_width="68dp"
+            android:layout_height="57dp"
             android:layout_marginStart="32dp"
-            android:layout_marginLeft="32dp"
             android:layout_marginTop="24dp"
             android:layout_marginBottom="24dp"
+            android:backgroundTint="#f22"
+            android:scaleType="fitXY"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.909"
             app:layout_constraintStart_toEndOf="@+id/activity_main_menuContainer_logo"
             app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.555"
             app:srcCompat="@drawable/safety" />
 
         <ImageButton
             android:id="@+id/activity_main_menuContainer_menuButton"
-            android:layout_width="48dp"
-            android:layout_height="48dp"
+            android:layout_width="59dp"
+            android:layout_height="61dp"
             android:layout_marginTop="24dp"
             android:layout_marginEnd="32dp"
-            android:layout_marginRight="32dp"
             android:layout_marginBottom="24dp"
+            android:backgroundTint="#f22"
             android:scaleType="fitXY"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/activity_main_menuContainer_logo"
+            app:layout_constraintHorizontal_bias="0.057"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.521"
             app:srcCompat="@drawable/menu_icon" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>

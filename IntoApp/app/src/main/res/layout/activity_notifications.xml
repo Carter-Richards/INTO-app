@@ -5,18 +5,31 @@
     android:id="@+id/notifications_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#FFFFFF"
+    android:background="#ECEFF0"
     android:orientation="vertical">
+
+    <ImageView
+        android:id="@+id/imageView3"
+        android:layout_width="417dp"
+        android:layout_height="52dp"
+        android:background="#000000"
+        app:layout_constraintBottom_toTopOf="@+id/notifications_listView"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:srcCompat="@color/common_google_signin_btn_text_dark_focused" />
 
     <TextView
         android:id="@+id/notifications_textView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
-        android:layout_marginLeft="16dp"
         android:layout_marginTop="16dp"
+        android:background="#000000"
         android:text="Notifications"
-        android:textColor="#000000"
+        android:textColor="#FFFFFF"
+        android:textSize="18sp"
+        android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -28,5 +41,8 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/notifications_textView" />
+        app:layout_constraintTop_toBottomOf="@+id/notifications_textView">
+
+    </ListView>
+
 </androidx.constraintlayout.widget.ConstraintLayout>
