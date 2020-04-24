@@ -4,9 +4,11 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.LinkedList;
-import org.json.JSONArray;
-import android.os.Message;
 import android.util.JsonReader;
+
+/** This class reads in a JSON array through an inputStream and then parses the information and creates a LinkedList of InformationObjects containing the information.
+ *  The getter method can then be called to retrieve this LinkedList.
+ */
 
 public class ExtractInformationObjects {
     private LinkedList<InformationObject> informationObjects;
@@ -18,13 +20,13 @@ public class ExtractInformationObjects {
     public void extractInformation(InputStream in) throws IOException {
         JsonReader reader = new JsonReader(new InputStreamReader(in, "UTF-8"));
         try {
-            readMessagesArray(reader, informationObjects);
+            readMessagesArray(reader, null);
         } finally {
             reader.close();
         }
     }
 
-    public void readMessagesArray(JsonReader reader, LinkedList<InformationObject> informationObjects) throws IOException {
+    private void readMessagesArray(JsonReader reader, LinkedList<InformationObject> informationObjects) throws IOException {
         LinkedList<InformationObject> infoObjs = informationObjects;
         reader.beginArray();
         while (reader.hasNext()) {
@@ -34,7 +36,7 @@ public class ExtractInformationObjects {
         this.informationObjects = infoObjs;
     }
 
-    public LinkedList<InformationObject> readMessage(JsonReader reader, LinkedList<InformationObject> informationObjects) throws IOException {
+    private LinkedList<InformationObject> readMessage(JsonReader reader, LinkedList<InformationObject> informationObjects) throws IOException {
         InformationObject infoObj = new InformationObject(null, null, null, null, null);
 
         reader.beginObject();

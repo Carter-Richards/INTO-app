@@ -1,8 +1,6 @@
 package com.Team25.intoapp;
 
 import android.content.Context;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,7 +12,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
-import java.io.InputStream;
+
 import java.util.List;
 
 public class Information_ListView_Adapter extends ArrayAdapter {

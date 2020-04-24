@@ -31,18 +31,21 @@ public class MainActivity extends AppCompatActivity {
     private LinearLayout menu;
     private LayoutInflater factory;
     private boolean menuPresent = false;
-    private double[] pointerPosX = {-26.00109,-25.00109,-24.00109,-23.00109};
-    private double[] pointerPosY = {140.01316,140.01316,140.01316,140.01316};
-    private String[] names = {"one","two","three","four"};
+    private double[] pointerPosX = {54.9778428};
+    private double[] pointerPosY ={-1.6166137};
+    private String[] names = {"Into Newcastle"};
     private View viewToAdd;
 
-    /** So the on create method is called when the application is initially launched. I have configured the manifest file to launch this method first.
-     * The Log.d tags are just for us to see in the logcat editor to have a better understanding on what is happening under the hood.
-     * @param savedInstanceState - Is a bundle that is used to restore activities if they are killed for some reason.
+    /** onCreate method is called when the application is initially launched. I have configured the manifest file to launch this method first.
+     * The Log.d tags are just for us to see in the logcat editor to have a better understanding of what is happening under the hood.
+     * @param savedInstanceState - Is a bundle that is used to restore activities if they are killed for some reason (app closed/rotated).
      * The first line sets the view of the app to be the activity_main xml file.
      * As we have custom view layouts we next need a Layout inflater to enable us to load our other views onto our main view.
-     * We load the inital homepage layout into the sub layout in activity_main to give the user something to interact with.
-     * We then link our global listView variable to the object in the information layout xml file.
+     * We load the initial homepage layout into the sub layout in activity_main to give the user something to interact with.
+     *
+     * After initialising the main layout, this method then setups up the 4 main onClickListeners for the layout.
+     * These are menu, safety, home and background.
+     *
      */
 @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,8 +59,10 @@ public class MainActivity extends AppCompatActivity {
         menu = findViewById(R.id.activity_main_menu);
         main_layout = findViewById(R.id.activity_main_otherContainer);
         main_layout.addView(myView);
-        Log.d(TAG, "onCreate: Finised");
+        Log.d(TAG, "onCreate: Finished");
 
+        /** This listener sets up the apps icon to always take the user back to the home page of the app.
+        */
         View.OnClickListener homePageListener = new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -67,7 +72,11 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         };
-
+        /** The safety button is similar to the page above however the content for this page isn't stored locally so it needs to access the async task in order
+        *  to get the relevant information from the server.
+        *  So the view to be loaded into the main_layout (Basically a container for all the other layouts in the app) is inflated and then manipulated.
+        *  After this the async task (queryDataBase) populates the listView with the relevant data and passes it back to be loaded onto the main layout.
+        */
         View.OnClickListener safetyButtonListener = new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -86,7 +95,9 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         };
-
+        /** The menu as from the design had to be openable, custom and have all the buttons work.
+        *   As we couldn't put an onClickListener within an onClickListener we setup a call method to set up on the onClickListeners of the menu's buttons.
+        */
         View.OnClickListener menuButtonListener = new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -94,7 +105,9 @@ public class MainActivity extends AppCompatActivity {
                 onClickMenuSetup();
             }
         };
-
+        /** The menu had to be able to be closed otherwise it would obstruct the users use of the app.
+        *   This simple method checks the global "menuPresent" flag and removes the menu if it is present based on it.
+        */
         View.OnClickListener closeMenuListener = new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -107,22 +120,24 @@ public class MainActivity extends AppCompatActivity {
 
 
 
-    /** Here are the linking variables allowing us to program the controls for the menu and the panic buttons at the top of the page
-     *  Unfortunatly there is pretty much duplicate code in programming all the buttons which sucks but due to naming conventions
-     */
+        /** Below are where we link objects in the design layouts to objects in the code that can be programmed.
+        *  After linking them we place the relevant onClickListeners on all the views and widgets that require them for the app to work.
+        */
         ImageButton menuButton = findViewById(R.id.activity_main_menuContainer_menuButton);
         ImageView homeIcon = findViewById(R.id.activity_main_menuContainer_logo);
-        ImageButton safetybutton = findViewById(R.id.activity_main_menuContainer_emergencyButton);
+        ImageButton safetyButton = findViewById(R.id.activity_main_menuContainer_emergencyButton);
 
-        safetybutton.setOnClickListener(safetyButtonListener);
+        safetyButton.setOnClickListener(safetyButtonListener);
         homeIcon.setOnClickListener(homePageListener);
         main_layout.setOnClickListener(closeMenuListener);
         menuButton.setOnClickListener(menuButtonListener);
     }
 
-    /** Rather than have the menu always present instead the menu is deleted and destroyed at runtime when the user requires it.
-     *  This saves precious memory for the device while it is running.
-     *  First of all the listener is definied and then attatched to all of the menus buttons.
+    /** Rather than have the menu always present, the menu is created/deleted at runtime when the user requires it.
+     *  This saves precious memory for the device while it is running as the views in the menu are quite memory intensive.
+     *  First the menu view is inflated and added to the relevant layout in the Activity_main visible view.
+     *  Then the menu present variable flag is set to true so the menu can be removed.
+     *
      */
 
     private void onClickMenuSetup(){
@@ -152,7 +167,7 @@ public class MainActivity extends AppCompatActivity {
                             myView = factory.inflate(R.layout.activity_homepage,null);
                             break;
                         case "aboutUs":
-                            Log.d(TAG, "quereyDataBase: about us");
+                            Log.d(TAG, "queryDataBase: about us");
                             main_layout.removeAllViews();
                             myView = factory.inflate(R.layout.activity_aboutus,null);
                             break;
@@ -191,7 +206,11 @@ public class MainActivity extends AppCompatActivity {
         homePageImage.setOnClickListener(menuItemListener);
 
     }
-
+    /** The only times the app calls out and starts external activity's is when accessing maps and the into website.
+     *  To isolate this behaviour we created the start map method as the maps activity requires some specific behaviour.
+     *  So if the maps query has been successful in getting the positions of the pointers for the map they will be added to the mapsIntent(Intent).
+     *  If not the maps will launch without any custom pointers and just position itself on the into building.
+     */
     private void startMap(){
         queryDataBase("maps");
         Intent mapsIntent = new Intent(this,MapsActivity.class);
@@ -203,6 +222,10 @@ public class MainActivity extends AppCompatActivity {
         }
         startActivity(mapsIntent);
     }
+
+    /** As a fair few methods need to call the async method, it made logical sense to have these two lines in their own method to reduce duplicate code.
+     * @param buttonName - the name of the query to be completed on the server.
+     */
     private void queryDataBase(String buttonName){
         QueryDataBase queryDataBase = new QueryDataBase();
         queryDataBase.execute(buttonName);
@@ -231,9 +254,9 @@ public class MainActivity extends AppCompatActivity {
         return queryValue;
     }
 
-    /** A method used to create a linkedlist of the menu so that if the menu needs to be changed at run time a premade list can be quickly generated or stored.
-     *  This method is used so that the on create method isn't over incombored.
-     * @return The list of the menu constraints to link on click listeners too and manipulate too.
+    /** A method used to create a linkedlist of the menu so that if the menu needs to be changed at run time a pre made list can be quickly generated or stored.
+     *  This method is used so that the onCreate method isn't over encumbered.
+     * @return The list of the menu constraints to link onClickListeners too and manipulate too.
      */
     private LinkedList<ConstraintLayout> populateMenuData(){
         LinkedList<ConstraintLayout> menuData = new LinkedList<>();
@@ -263,13 +286,16 @@ public class MainActivity extends AppCompatActivity {
     }
     /** Below is a private class which uses threads to perform background activity for the user.
      *  We will be using this background method to obtain data from the database if and when queries need to be made.
-     *  The DoInBackground method is called first and is then followed by on post execute.
+     *  The DoInBackground method is called first and is then followed by onPostExecute.
      *  This will give us flexibility when it comes to our menu.
      *  However will have to be programmed correctly.
      */
     private class QueryDataBase extends AsyncTask<String,Void,InformationManager> {
 
-
+        /** On post execute is used to populate our ListViews with the data obtained from the background activity.
+         *  The query performed dictates the listView used and the adapter used for it's representation.
+         * @param informationManager - A group defined Class to hold the information returned by a query.
+         */
         @Override
         protected void onPostExecute(InformationManager informationManager) {
             super.onPostExecute(informationManager);
@@ -277,7 +303,9 @@ public class MainActivity extends AppCompatActivity {
                 ListView listPages = viewToAdd.findViewById((R.id.notifications_listView));
                 Information_Layout_Adapter layout_adapter = new Information_Layout_Adapter(MainActivity.this,R.layout.notification_layout,informationManager.getInformationObjects());
                 listPages.setAdapter(layout_adapter);
-            }else{
+            }else if(informationManager.getName().equals("maps")){
+
+            } else{
                 ListView listPages = viewToAdd.findViewById(R.id.information_manager_layout_listView);
                 Information_ListView_Adapter layoutAdapter = new Information_ListView_Adapter(MainActivity.this, R.layout.information_layout, informationManager.getBitmapInformationObjects());
                 listPages.setAdapter(layoutAdapter);
@@ -285,6 +313,11 @@ public class MainActivity extends AppCompatActivity {
 
             Log.d(TAG, "onPostExecute: Finished!");
         }
+
+        /** As we only have the file paths of the images, we needed a way while the app was still async to transform them into images.
+         *  Our solution was this method, it reads the LinkedList of InformationObjects and transforms them into BitmapInformationObjects within the InformationManager
+         * @param informationManager - The data to be translated and adapted
+         */
 
         private void bitmapCreation(InformationManager informationManager){
             LinkedList<InformationObject> informationObjects = informationManager.getInformationObjects();
@@ -301,9 +334,9 @@ public class MainActivity extends AppCompatActivity {
             }
         }
 
-        /** The google maps ideally require pointers to determine to the user were all of the places are local to there position.
-         *  In order to do this, we needed to pass the values into the map within it's oncreate bundles but we can only pass primitive array types so we need to
-         *      create those values to pass. The code below does this using the global variables defined at the top of the clasee.
+        /** The google maps ideally require pointers to determine to the user were all of the places are local to their position.
+         *  In order to do this, we needed to pass the values into the map within it's onCreate bundles but we can only pass primitive array types so we need to
+         *  create those values to pass. The code below does this using the global variables defined at the top of the class.
          * @param rawInfo - The information returned from the database query
          */
         private void mapPointerCoordsSetup(InformationManager rawInfo){
@@ -312,6 +345,7 @@ public class MainActivity extends AppCompatActivity {
             pointerPosY = new double[informationObjects.size()];
             names = new String[informationObjects.size()];
             for(int i = 0; i<informationObjects.size();i++){
+                Log.d(TAG, "mapPointerCoordsSetup:  creating coords");
                 String location = informationObjects.get(i).getLocation();
                 String[] coords = location.split(" ");
                 pointerPosX[i] = Double.parseDouble(coords[0]);
@@ -320,15 +354,23 @@ public class MainActivity extends AppCompatActivity {
             }
         }
 
+        /** This method creates the query and then creates an information manager object with the sorted information required for the display of the information of the query.
+         * @param strings - A string or list of strings that has been passed into the inner class for processing
+         * @return - The required sorted data for display.
+         * The method also preps for the distinction between notifications and maps to do the bitmap creation if it is needed and prep the map pointers if they
+         * are needed.
+         */
 
         @Override
         protected InformationManager doInBackground(String... strings) {
            //String query = buildQuery(strings[0]);
            //InformationManager returnInfo = doQuery(query);
 
-            //TEST VALUES
+            //These values are only used as we were unable to get the server hosted and therefore weren't able to test our code that retrieves information from the server.
+            //The above commented out code would be used if we were connecting to the server.
             InformationManager returnInfo = InitialiseData.InitData(strings[0]);
-            //
+
+
             Log.d(TAG, "doInBackground: is this working?");
             if(!(strings[0].equals("notifications"))){
                 bitmapCreation(returnInfo);
@@ -338,13 +380,12 @@ public class MainActivity extends AppCompatActivity {
             return returnInfo;
         }
 
-        /** This switch class is called to build the query for the database based on the id of the button that has been clicked by the user.
-         *  This will allow us to reuse the same query database method for all the users interactions greatly reducing the amount of duplicate code in our code.
-         * @param buttonID - The button that has been clicked id. Which is a unique identifier for the widget.
-         * @return - A string which will be the complete and specified query for the expected and wanted action.
+        /** This method takes the string of the button pressed and translates it into a query to query the backend database with.
+         *  The switch case statements prepares the return string for the query and then the correct query is returned ready for the retrieval and parsing of
+         *  the information from the database.
+         * @param buttonID - The identifier used to determine which query should be used.
+         * @return - The string of the query to be executed.
          */
-
-
 
         private String buildQuery(String buttonID) {
             String actualQuery = "";
@@ -392,6 +433,11 @@ public class MainActivity extends AppCompatActivity {
             return actualQuery;
         }
 
+        /** This method connects to the backend of the database and then parses the returned json.
+         *  From this the InformationManager is then populated with the InformationObjects which are used to automate the population of the listViews.
+         * @param query - The full query for the backend server
+         * @return - The populated InformationManager
+         */
 
         private InformationManager doQuery(String query) {
             Log.d(TAG, "doQuery: Start");

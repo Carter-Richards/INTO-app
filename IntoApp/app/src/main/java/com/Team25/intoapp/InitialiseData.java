@@ -1,7 +1,10 @@
 package com.Team25.intoapp;
 
 import java.util.LinkedList;
-//This class is being used to initialise the data in place of the server providing this information as we were unable to host the server
+
+/**This class is being used to initialise the data in place of the server providing this information as we were unable to host the server
+ */
+
 public class InitialiseData {
 
     public static InformationManager InitData(String input){
@@ -9,8 +12,19 @@ public class InitialiseData {
         LinkedList<InformationObject> list = new LinkedList<>();
         switch(input){
             case "notifications":
-                InformationObject notif1 = new InformationObject("Notification test","This is a test of the notification page. This is where data about the event would go","","","");
+                InformationObject notif1 = new InformationObject("GIAG Archery","Come test your aim with Newcastle Universities very own Archery Club, limited spaces available.","","","");
                 list.add(notif1);
+
+                InformationObject notif2 = new InformationObject("Summer Ball","PsychSoc's End of Year Summer Ball The Life Centre","","","");
+                list.add(notif2);
+
+                InformationObject notif3 = new InformationObject("Legends Presents... The Ultimate Legends","LEGENDS Present The Ultimate Legends The North's ELiTE Celebrates Once Again Hosting TWO rooms At A New Venue!","","","");
+                list.add(notif3);
+
+                InformationObject notif4 = new InformationObject("Newcastle United Comic Con 2020",
+                        "Comic Con! Everyone's dream. Unfortunately society funds don't stretch to flying us to San Diego. However, they do stretch to taking us all to Newcastle Comic Con. If enough people can make it then we will work out a group discount for us","","","");
+                list.add(notif4);
+
                 returnInfo.setInformationObjects(list);
                 break;
             case "thingsToDo":
@@ -164,7 +178,9 @@ public class InitialiseData {
                 returnInfo.setInformationObjects(list);
                 break;
             case "maps":
-
+                InformationObject map1 = new InformationObject("test 1","",
+                        "54.9803 1.6130","","");
+                   list.add(map1);
                 returnInfo.setInformationObjects(list);
                 break;
             case "societies":

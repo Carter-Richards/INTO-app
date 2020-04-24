@@ -1,11 +1,15 @@
 package com.Team25.intoapp;
 
+/** A basic class with setters and getters to store information about locations.
+ */
+
 public class InformationObject {
     private String title;
     private String description;
     private String location;
     private String imgPath;
     private String date;
+
     public InformationObject(String title, String description, String location, String imgPath, String date) {
         this.title = title;
         this.description = description;

@@ -2,6 +2,8 @@ package com.Team25.intoapp;
 
 import android.graphics.Bitmap;
 
+/** A basic class with setters and getters to contain information about information entities with images.
+ */
 public class BitmapInformationObject {
     private String title;
     private String description;
