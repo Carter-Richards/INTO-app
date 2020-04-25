@@ -1,0 +1,30 @@
+Code adapted from 'https://www.linode.com/docs/web-servers/apache/how-to-set-up-htaccess-on-apache/'
+
+# Deny access to .htaccess
+<Files .htaccess>
+Order allow,deny
+Deny from all
+</Files>
+
+# Disable directory browsing 
+Options -Indexes
+
+# Deny access to files with extensions .ini, .psd, .log, .sh
+<FilesMatch "\.(jar|php|json|txt|md)$">
+Order allow,deny
+Deny from all
+
+</FilesMatch>
+
+# Deny access to files with extensions .ini, .psd, .log, .sh
+<FilesMatch "event.php">
+Order allow,deny
+Allow from all
+
+</FilesMatch>
+
+# Deny access to filenames starting with dot(.)
+<FilesMatch "^\.">
+Order allow,deny
+Deny from all
+</FilesMatch>
