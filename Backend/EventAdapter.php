@@ -31,18 +31,6 @@ class EventAdapter{
         $this->connectObj->__destruct();
     }
 
-    //Takes the image URI and makes it fully qualified, eg TestImg.png -> /Images/TestImg.png
-    public function makeFullImgLink($recordSet){
-        for($x = 0; $x < count($recordSet); $x++){
-            foreach($recordSet[$x] as $field => $value){
-                if($field == 'ImgPath'){
-                    $recordSet[$x][$field] = "/Images/".$recordSet[$x][$field];
-                }
-            }
-        }
-        return($recordSet);
-    }
-
     //Gets all events regardless of date or category
     public function getAllEvents(){
         $query = $this->dbConn->prepare(  'SELECT Title, Description, Date, ST_AsText(Location), ImgPath FROM events');
@@ -57,7 +45,7 @@ class EventAdapter{
                             WHERE Date > :date');
         $query->bindParam(':date', $date);
         $query->execute();
-        $result = $this->makeFullImgLink($query->fetchAll(PDO::FETCH_ASSOC));
+        $result = $query->fetchAll(PDO::FETCH_ASSOC);
         return($result);
     }
 
@@ -67,7 +55,7 @@ class EventAdapter{
                             WHERE Date < :date');
         $query->bindparam(':date', $date);
         $query->execute();
-        $result = $this->makeFullImgLink($query->fetchAll(PDO::FETCH_ASSOC));
+        $result = $query->fetchAll(PDO::FETCH_ASSOC);
         return($result);
     }
 
@@ -81,7 +69,7 @@ class EventAdapter{
         $query->bindparam(':lowerBoundDate', $lowerBoundDate);
         $query->bindparam(':upperBoundDate', $upperBoundDate);
         $query->execute();
-        $result = $this->makeFullImgLink($query->fetchAll(PDO::FETCH_ASSOC));
+        $result = $query->fetchAll(PDO::FETCH_ASSOC);
         return($result);
     }
 
@@ -92,7 +80,7 @@ class EventAdapter{
         $query->bindParam(':date', $date);
         $query->bindParam(':category', $category);
         $query->execute();
-        $result = $this->makeFullImgLink($query->fetchAll(PDO::FETCH_ASSOC));
+        $result = $query->fetchAll(PDO::FETCH_ASSOC);
         return($result);
     }
 
@@ -103,7 +91,7 @@ class EventAdapter{
         $query->bindparam(':date', $date);
         $query->bindParam(':category', $category);
         $query->execute();
-        $result = $this->makeFullImgLink($query->fetchAll(PDO::FETCH_ASSOC));
+        $result = $query->fetchAll(PDO::FETCH_ASSOC);
         return($result);
     }
 
@@ -114,7 +102,7 @@ class EventAdapter{
         $query->bindparam(':date', $date);
         $query->bindParam(':category', $category);
         $query->execute();
-        $result = $this->makeFullImgLink($query->fetchAll(PDO::FETCH_ASSOC));
+        $result = $query->fetchAll(PDO::FETCH_ASSOC);
         return($result);
     }
 
@@ -124,7 +112,7 @@ class EventAdapter{
                             WHERE Category = :category');
         $query->bindParam(':category', $category);
         $query->execute();
-        $result = $this->makeFullImgLink($query->fetchAll(PDO::FETCH_ASSOC));
+        $result = $query->fetchAll(PDO::FETCH_ASSOC);
         return($result);
     }
 

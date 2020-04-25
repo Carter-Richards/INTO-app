@@ -1,4 +1,4 @@
-Code adapted from 'https://www.linode.com/docs/web-servers/apache/how-to-set-up-htaccess-on-apache/'
+# Code adapted from 'https://www.linode.com/docs/web-servers/apache/how-to-set-up-htaccess-on-apache/'
 
 # Deny access to .htaccess
 <Files .htaccess>
